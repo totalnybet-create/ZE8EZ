@@ -1,0 +1,56 @@
+name: Dane firmy ZE8ES
+description: Przekaż zatwierdzone dane potrzebne do kontaktu, stopki, SEO i dokumentów prawnych.
+title: "Dane firmy: "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Nie wpisuj haseł, kluczy API, kodów dostępu ani danych logowania. Repozytorium powinno zawierać wyłącznie dane przeznaczone do publikacji.
+  - type: input
+    id: company_name
+    attributes:
+      label: Pełna nazwa firmy lub działalności
+      placeholder: Nazwa przeznaczona do publikacji
+    validations:
+      required: true
+  - type: input
+    id: email
+    attributes:
+      label: Publiczny adres e-mail
+      placeholder: kontakt@example.com
+    validations:
+      required: true
+  - type: input
+    id: phone
+    attributes:
+      label: Publiczny numer telefonu
+      placeholder: Opcjonalnie
+  - type: input
+    id: location
+    attributes:
+      label: Miejscowość lub obszar działania
+    validations:
+      required: true
+  - type: input
+    id: domain
+    attributes:
+      label: Docelowa domena HTTPS
+      placeholder: https://example.com/
+  - type: textarea
+    id: legal
+    attributes:
+      label: Dane do dokumentów prawnych
+      description: Forma prawna, adres, NIP, REGON lub KRS — tylko gdy mają być publikowane i są potrzebne.
+  - type: textarea
+    id: socials
+    attributes:
+      label: Publiczne profile społecznościowe
+      placeholder: Jeden zatwierdzony adres na linię
+  - type: checkboxes
+    id: approval
+    attributes:
+      label: Zatwierdzenie publikacji
+      options:
+        - label: Potwierdzam, że powyższe dane mogą zostać opublikowane na stronie ZE8ES.
+          required: true

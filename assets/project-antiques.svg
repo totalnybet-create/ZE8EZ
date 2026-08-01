@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="70" y1="500" x2="820" y2="30" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#241A13"/>
+      <stop offset=".52" stop-color="#4B3020"/>
+      <stop offset="1" stop-color="#8B5A32"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#F3D39B"/>
+      <stop offset=".55" stop-color="#C99655"/>
+      <stop offset="1" stop-color="#8C5A2F"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%">
+      <feDropShadow dx="0" dy="24" stdDeviation="22" flood-color="#100904" flood-opacity=".58"/>
+    </filter>
+  </defs>
+
+  <rect width="900" height="520" rx="28" fill="url(#bg)"/>
+  <circle cx="742" cy="115" r="205" fill="#E7B56D" fill-opacity=".12"/>
+  <path d="M34 436C238 520 579 469 874 121" stroke="#E1B577" stroke-opacity=".34" stroke-width="3"/>
+
+  <g filter="url(#shadow)" transform="rotate(-3 572 278)">
+    <rect x="250" y="72" width="566" height="374" rx="22" fill="#FBF7F0" stroke="#FFFFFF" stroke-opacity=".5"/>
+    <rect x="268" y="91" width="530" height="43" rx="10" fill="#2C2018"/>
+    <text x="292" y="118" fill="#F7E7CC" font-family="Georgia, serif" font-size="17" font-weight="700">Giełda staroci</text>
+    <text x="656" y="116" fill="#CFB895" font-family="Arial" font-size="9">HOME</text>
+    <text x="710" y="116" fill="#CFB895" font-family="Arial" font-size="9">KATEGORIE</text>
+
+    <rect x="268" y="148" width="530" height="106" rx="12" fill="#EEE3D4"/>
+    <rect x="284" y="164" width="172" height="74" rx="9" fill="url(#gold)"/>
+    <path d="M315 216C328 188 346 175 363 184C381 194 380 215 394 221C406 226 421 218 437 195V238H284V164H456V238H284Z" fill="#5A3824" fill-opacity=".52"/>
+    <text x="482" y="180" fill="#8E653F" font-family="Arial" font-size="8">STAROCIE</text>
+    <text x="482" y="205" fill="#2D2119" font-family="Georgia, serif" font-size="19" font-weight="700">Antyki i stare przedmioty</text>
+    <rect x="482" y="219" width="238" height="6" rx="3" fill="#6D5541" fill-opacity=".25"/>
+    <rect x="482" y="232" width="176" height="6" rx="3" fill="#6D5541" fill-opacity=".18"/>
+
+    <g>
+      <rect x="268" y="270" width="164" height="154" rx="12" fill="#FFFFFF" stroke="#D5C4AF"/>
+      <rect x="281" y="283" width="138" height="72" rx="8" fill="#A06C3E"/>
+      <circle cx="318" cy="316" r="21" fill="#D8B784"/>
+      <path d="M281 355L317 317L340 337L366 304L419 355H281Z" fill="#5E3C26" fill-opacity=".62"/>
+      <text x="281" y="377" fill="#A27A52" font-family="Arial" font-size="7">STAROCIE</text>
+      <text x="281" y="396" fill="#2E2119" font-family="Arial" font-size="10" font-weight="700">Renowacja starych mebli</text>
+      <rect x="281" y="407" width="112" height="5" rx="2.5" fill="#6D5541" fill-opacity=".2"/>
+
+      <rect x="451" y="270" width="164" height="154" rx="12" fill="#FFFFFF" stroke="#D5C4AF"/>
+      <rect x="464" y="283" width="138" height="72" rx="8" fill="#7F5A42"/>
+      <rect x="500" y="295" width="66" height="48" rx="5" fill="#D4B27C"/>
+      <path d="M513 343V306H553V343" stroke="#4A2E20" stroke-width="4"/>
+      <text x="464" y="377" fill="#A27A52" font-family="Arial" font-size="7">PORADNIKI</text>
+      <text x="464" y="396" fill="#2E2119" font-family="Arial" font-size="10" font-weight="700">Jak ocenić wartość antyku</text>
+      <rect x="464" y="407" width="112" height="5" rx="2.5" fill="#6D5541" fill-opacity=".2"/>
+
+      <rect x="634" y="270" width="164" height="154" rx="12" fill="#FFFFFF" stroke="#D5C4AF"/>
+      <rect x="647" y="283" width="138" height="72" rx="8" fill="#B38A5A"/>
+      <circle cx="716" cy="319" r="28" fill="#EEE1C8"/>
+      <path d="M716 294V319L733 330" stroke="#60412C" stroke-width="4" stroke-linecap="round"/>
+      <text x="647" y="377" fill="#A27A52" font-family="Arial" font-size="7">HISTORIA</text>
+      <text x="647" y="396" fill="#2E2119" font-family="Arial" font-size="10" font-weight="700">Przedmioty z dawnych lat</text>
+      <rect x="647" y="407" width="112" height="5" rx="2.5" fill="#6D5541" fill-opacity=".2"/>
+    </g>
+  </g>
+
+  <g filter="url(#shadow)" transform="rotate(7 696 352)">
+    <rect x="648" y="220" width="132" height="266" rx="27" fill="#20150F" stroke="#F1D3A5" stroke-opacity=".45"/>
+    <rect x="659" y="235" width="110" height="236" rx="19" fill="#F9F3EA"/>
+    <rect x="690" y="244" width="48" height="12" rx="6" fill="#25170F"/>
+    <text x="674" y="281" fill="#34241A" font-family="Georgia, serif" font-size="12" font-weight="700">Giełda staroci</text>
+    <rect x="672" y="297" width="84" height="70" rx="10" fill="url(#gold)"/>
+    <circle cx="714" cy="330" r="22" fill="#F0DDC0"/>
+    <path d="M714 312V332L728 341" stroke="#704A2D" stroke-width="3" stroke-linecap="round"/>
+    <rect x="672" y="383" width="84" height="10" rx="5" fill="#3D2A1E" fill-opacity=".8"/>
+    <rect x="672" y="402" width="68" height="6" rx="3" fill="#6D5541" fill-opacity=".24"/>
+    <rect x="672" y="417" width="76" height="6" rx="3" fill="#6D5541" fill-opacity=".18"/>
+    <rect x="672" y="440" width="56" height="18" rx="9" fill="#8C5A2F"/>
+  </g>
+</svg>

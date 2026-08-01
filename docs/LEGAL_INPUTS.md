@@ -2,55 +2,57 @@
 
 ## Administrator
 
-- pełna nazwa firmy albo imię i nazwisko,
-- forma prawna,
-- adres lub miejscowość prowadzenia działalności,
-- NIP, REGON i KRS, jeżeli mają zastosowanie,
-- adres e-mail do kontaktu,
-- osobny adres e-mail do spraw prywatności, jeżeli będzie używany.
+### Potwierdzone
 
-## Formularz kontaktowy
+- operator marki: **Marcin Siedlarek**,
+- forma działania: **osoba prywatna, bez zarejestrowanej działalności**,
+- marka: **ZE8ES**,
+- adres e-mail do kontaktu i spraw prywatności: **totalnybet@gmail.com**,
+- obszar działania: **cała Polska, zdalnie**.
 
-- zatwierdzony adres odbiorczy,
-- wybrany dostawca endpointu lub własny backend,
-- lokalizacja serwerów dostawcy,
-- umowa powierzenia danych, jeżeli jest wymagana,
-- okres przechowywania wiadomości,
-- procedura usuwania wiadomości,
-- ochrona antyspamowa i jej dostawca.
+### Do uzupełnienia
+
+- adres lub miejscowość administratora,
+- okres przechowywania korespondencji,
+- podstawy prawne odpowiednie dla faktycznego sposobu obsługi zapytań.
+
+NIP, REGON i KRS nie mają obecnie zastosowania, ponieważ ZE8ES nie jest prowadzony jako zarejestrowana działalność.
+
+## Kontakt e-mail
+
+- zatwierdzony adres odbiorczy: **totalnybet@gmail.com**,
+- strona nie posiada formularza kontaktowego ani własnego backendu,
+- wiadomości są wysyłane przez program pocztowy użytkownika,
+- do ustalenia pozostaje okres przechowywania wiadomości i procedura ich usuwania.
 
 ## Hosting i domena
 
-- docelowa domena,
-- dostawca hostingu,
-- dostawca DNS,
-- lokalizacja przetwarzania danych,
-- dane przechowywane w logach serwera i okres ich przechowywania.
+- obecny adres demonstracyjny: GitHub Pages,
+- obecny hosting: GitHub Pages,
+- docelowa domena: do ustalenia,
+- dostawca DNS: do ustalenia po wyborze domeny,
+- dane przechowywane w logach hostingu i okres ich przechowywania: do potwierdzenia.
 
 ## Analityka i marketing
 
-- decyzja, czy analityka będzie wdrażana,
-- nazwa narzędzia analitycznego,
-- lista używanych cookies lub pamięci lokalnej,
-- mechanizm zgody,
-- informacje o transferze danych poza EOG, jeżeli występuje,
-- narzędzia reklamowe lub remarketingowe, jeżeli będą używane.
+- obecnie brak wdrożonej analityki i narzędzi marketingowych,
+- decyzja o przyszłej analityce: do podjęcia,
+- mechanizm zgody będzie potrzebny przed uruchomieniem opcjonalnych cookies lub narzędzi marketingowych.
 
 ## Treści i portfolio
 
-- zgody na publikację nazw klientów,
-- zgody na wykorzystanie logotypów i zrzutów ekranów,
-- źródło i licencje materiałów graficznych,
-- potwierdzenie prawdziwości publikowanych wyników i opinii.
+- opublikowane realizacje: Legnicki Rynek i Giełda Staroci,
+- North Store pozostaje jednoznacznie oznaczoną koncepcją demonstracyjną,
+- należy zachować potwierdzenie prawa do publikacji nazw, logotypów i materiałów projektowych,
+- nie publikować niepotwierdzonych wyników ani opinii klientów.
 
-## Dokumenty do przygotowania przed produkcją
+## Dokumenty do przygotowania przed finalną publikacją
 
 - finalna polityka prywatności,
-- klauzula informacyjna przy formularzu,
-- regulamin, jeśli strona zacznie świadczyć usługi drogą elektroniczną wymagające regulaminu,
+- regulamin tylko wtedy, gdy strona zacznie świadczyć usługi drogą elektroniczną wymagające regulaminu,
 - polityka cookies, jeżeli zostaną uruchomione opcjonalne cookies,
-- informacje firmowe wymagane w stopce lub zakładce kontaktowej.
+- uzupełnione informacje administratora w dokumencie prywatności.
 
 ## Zasada publikacji
 
-Dokument `privacy.html` pozostaje oznaczony jako `noindex,nofollow`, dopóki dane z tej listy nie zostaną uzupełnione i zatwierdzone.
+Dokument `privacy.html` pozostaje oznaczony jako `noindex,nofollow`, dopóki miejscowość lub adres administratora, okres przechowywania korespondencji i podstawy prawne nie zostaną uzupełnione oraz zatwierdzone.

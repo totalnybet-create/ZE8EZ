@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="30" y1="500" x2="840" y2="25" gradientUnits="userSpaceOnUse"><stop stop-color="#092C36"/><stop offset=".48" stop-color="#143D5B"/><stop offset="1" stop-color="#5E2B8C"/></linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#27C3D7"/><stop offset=".5" stop-color="#3D82FF"/><stop offset="1" stop-color="#8A4EFF"/></linearGradient>
+    <filter id="s" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="22" stdDeviation="22" flood-color="#02040A" flood-opacity=".55"/></filter>
+  </defs>
+  <rect width="900" height="520" rx="28" fill="url(#bg)"/>
+  <circle cx="735" cy="122" r="205" fill="#4B80FF" fill-opacity=".14"/>
+  <circle cx="95" cy="450" r="150" fill="#19C4CE" fill-opacity=".08"/>
+  <g filter="url(#s)" transform="rotate(-3 560 286)">
+    <rect x="250" y="70" width="565" height="385" rx="24" fill="#101827" stroke="#FFFFFF" stroke-opacity=".2"/>
+    <rect x="270" y="90" width="525" height="345" rx="16" fill="#09101B"/>
+    <rect x="270" y="90" width="525" height="50" rx="16" fill="#111C2C"/>
+    <circle cx="295" cy="115" r="7" fill="#2DC1D3"/>
+    <text x="311" y="120" fill="white" font-family="Arial" font-size="14" font-weight="700">Service Flow</text>
+    <text x="588" y="120" fill="#8591A4" font-family="Arial" font-size="9">ZLECENIA</text>
+    <text x="650" y="120" fill="#8591A4" font-family="Arial" font-size="9">KALENDARZ</text>
+    <rect x="732" y="104" width="43" height="22" rx="7" fill="url(#accent)"/>
+    <text x="744" y="119" fill="white" font-family="Arial" font-size="8" font-weight="700">+ NOWE</text>
+
+    <rect x="286" y="157" width="151" height="85" rx="14" fill="#121D2D" stroke="#FFFFFF" stroke-opacity=".08"/>
+    <text x="304" y="181" fill="#8995A7" font-family="Arial" font-size="8">AKTYWNE ZLECENIA</text>
+    <text x="304" y="214" fill="white" font-family="Arial" font-size="28" font-weight="700">24</text>
+    <path d="M373 218L388 203L399 211L419 187" stroke="url(#accent)" stroke-width="3" stroke-linecap="round"/>
+
+    <rect x="450" y="157" width="151" height="85" rx="14" fill="#121D2D" stroke="#FFFFFF" stroke-opacity=".08"/>
+    <text x="468" y="181" fill="#8995A7" font-family="Arial" font-size="8">CZAS REALIZACJI</text>
+    <text x="468" y="214" fill="white" font-family="Arial" font-size="28" font-weight="700">2,4 dnia</text>
+
+    <rect x="614" y="157" width="165" height="85" rx="14" fill="#121D2D" stroke="#FFFFFF" stroke-opacity=".08"/>
+    <text x="632" y="181" fill="#8995A7" font-family="Arial" font-size="8">SATYSFAKCJA</text>
+    <text x="632" y="214" fill="white" font-family="Arial" font-size="28" font-weight="700">96%</text>
+    <circle cx="750" cy="205" r="22" stroke="#263449" stroke-width="7"/>
+    <path d="M750 183A22 22 0 1 1 730 214" stroke="url(#accent)" stroke-width="7" stroke-linecap="round"/>
+
+    <rect x="286" y="257" width="312" height="160" rx="14" fill="#121D2D" stroke="#FFFFFF" stroke-opacity=".08"/>
+    <text x="305" y="282" fill="#8995A7" font-family="Arial" font-size="8">NAJBLIŻSZE ZLECENIA</text>
+    <rect x="305" y="299" width="273" height="32" rx="9" fill="#172438"/>
+    <circle cx="323" cy="315" r="8" fill="#2FC7D7"/>
+    <rect x="340" y="308" width="84" height="7" rx="3.5" fill="#F5F7FB" fill-opacity=".75"/>
+    <rect x="340" y="320" width="50" height="4" rx="2" fill="#FFFFFF" fill-opacity=".12"/>
+    <rect x="524" y="307" width="40" height="15" rx="7" fill="#2FC7D7" fill-opacity=".2"/>
+    <rect x="305" y="340" width="273" height="32" rx="9" fill="#172438"/>
+    <circle cx="323" cy="356" r="8" fill="#4B80FF"/>
+    <rect x="340" y="349" width="104" height="7" rx="3.5" fill="#F5F7FB" fill-opacity=".75"/>
+    <rect x="340" y="361" width="61" height="4" rx="2" fill="#FFFFFF" fill-opacity=".12"/>
+    <rect x="524" y="348" width="40" height="15" rx="7" fill="#4B80FF" fill-opacity=".2"/>
+    <rect x="305" y="381" width="273" height="22" rx="9" fill="#172438"/>
+
+    <rect x="612" y="257" width="167" height="160" rx="14" fill="#121D2D" stroke="#FFFFFF" stroke-opacity=".08"/>
+    <text x="630" y="282" fill="#8995A7" font-family="Arial" font-size="8">TYDZIEŃ</text>
+    <rect x="630" y="300" width="131" height="100" rx="10" fill="#0F1825"/>
+    <path d="M644 385V337M666 385V320M688 385V350M710 385V307M732 385V328M754 385V315" stroke="url(#accent)" stroke-width="12" stroke-linecap="round"/>
+  </g>
+  <g filter="url(#s)" transform="rotate(6 212 332)">
+    <rect x="113" y="197" width="195" height="275" rx="24" fill="#0C1422" stroke="#FFFFFF" stroke-opacity=".18"/>
+    <text x="138" y="234" fill="#8490A3" font-family="Arial" font-size="9">DZISIAJ</text>
+    <text x="138" y="260" fill="white" font-family="Arial" font-size="21" font-weight="700">Plan dnia</text>
+    <rect x="136" y="284" width="148" height="44" rx="12" fill="url(#accent)" fill-opacity=".9"/>
+    <circle cx="157" cy="306" r="8" fill="white" fill-opacity=".35"/>
+    <text x="174" y="304" fill="white" font-family="Arial" font-size="9" font-weight="700">Montaż instalacji</text>
+    <text x="174" y="317" fill="white" fill-opacity=".7" font-family="Arial" font-size="7">09:00–11:30</text>
+    <rect x="136" y="340" width="148" height="44" rx="12" fill="#172438"/>
+    <circle cx="157" cy="362" r="8" fill="#4B80FF"/>
+    <text x="174" y="360" fill="white" font-family="Arial" font-size="9" font-weight="700">Przegląd klienta</text>
+    <text x="174" y="373" fill="#7F8A9C" font-family="Arial" font-size="7">12:00–13:00</text>
+    <rect x="136" y="396" width="148" height="44" rx="12" fill="#172438"/>
+    <circle cx="157" cy="418" r="8" fill="#8A4EFF"/>
+    <text x="174" y="416" fill="white" font-family="Arial" font-size="9" font-weight="700">Wycena projektu</text>
+    <text x="174" y="429" fill="#7F8A9C" font-family="Arial" font-size="7">14:30–15:00</text>
+  </g>
+</svg>

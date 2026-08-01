@@ -4,6 +4,46 @@ html, body { min-width: 0; }
 main, section, .container, .hero-grid, .results-grid, .about-grid, .contact-grid { min-width: 0; }
 h1, h2, h3, p, a, span { overflow-wrap: anywhere; }
 
+.field-honeypot {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+}
+.consent-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.consent-row input { flex: 0 0 auto; width: 18px; height: 18px; margin-top: 2px; accent-color: var(--violet); }
+.consent-row a { color: #a995ff; text-decoration: underline; text-underline-offset: 3px; }
+.form-status[data-state="error"] { color: #ff8b9c; }
+.form-status[data-state="success"] { color: var(--success); }
+.form-status[data-state="info"] { color: #aeb7c8; }
+.field button:disabled { cursor: wait; opacity: .68; transform: none; }
+
+.legal-page { min-height: 100svh; padding-top: 132px; }
+.legal-content { max-width: 900px; }
+.legal-content > h1 { margin-bottom: 24px; font-size: clamp(44px, 6vw, 72px); }
+.legal-warning {
+  margin-bottom: 40px;
+  padding: 20px;
+  border: 1px solid rgba(255, 190, 82, .28);
+  border-radius: 14px;
+  color: #d9d0bd;
+  background: rgba(255, 178, 46, .055);
+}
+.legal-content > section { padding: 28px 0; border-top: 1px solid var(--line); }
+.legal-content > section h2 { margin-bottom: 13px; font-size: clamp(25px, 3vw, 34px); }
+.legal-content > section p { margin-bottom: 0; color: var(--muted); }
+.legal-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+
 @media (min-width: 1280px) {
   :root { --container: 1220px; }
   .hero { padding-top: 132px; }
@@ -43,6 +83,7 @@ h1, h2, h3, p, a, span { overflow-wrap: anywhere; }
   .process-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .about-grid, .contact-grid { grid-template-columns: 1fr; }
   .about-visual { min-height: 340px; }
+  .legal-page { padding-top: 110px; }
 }
 
 @media (max-width: 430px) {
@@ -82,6 +123,10 @@ h1, h2, h3, p, a, span { overflow-wrap: anywhere; }
   .field input, .field textarea, .field select { min-height: 48px; font-size: 16px; }
   .footer-grid { grid-template-columns: 1fr; }
   .footer-bottom { align-items: flex-start; flex-direction: column; }
+  .legal-page { padding-top: 98px; }
+  .legal-content > h1 { font-size: 42px; }
+  .legal-warning { padding: 16px; }
+  .legal-actions .btn { width: 100%; }
 }
 
 @media (max-width: 350px) {

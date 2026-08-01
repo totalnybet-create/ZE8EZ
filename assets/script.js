@@ -223,19 +223,138 @@
 
   const form = document.querySelector('#contact-form');
   const status = document.querySelector('.form-status');
-  form?.addEventListener('submit', (event) => {
+  const submitButton = form?.querySelector('button[type="submit"]');
+  let formStartedAt = performance.now();
+
+  const defaultFormConfig = Object.freeze({
+    formEndpoint: '',
+    requestTimeoutMs: 12000,
+    minimumFillTimeMs: 1500,
+    clientCooldownMs: 60000,
+  });
+
+  const formConfigPromise = fetch('assets/site-config.json', {
+    cache: 'no-store',
+    credentials: 'same-origin',
+  })
+    .then((response) => {
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return response.json();
+    })
+    .then((config) => ({ ...defaultFormConfig, ...config }))
+    .catch(() => defaultFormConfig);
+
+  const setFormStatus = (message, type = 'info') => {
+    if (!status) return;
+    status.textContent = message;
+    status.dataset.state = type;
+  };
+
+  const isAllowedEndpoint = (value) => {
+    if (!value) return false;
+    try {
+      const endpoint = new URL(value, window.location.href);
+      const localDevelopment = ['localhost', '127.0.0.1'].includes(endpoint.hostname);
+      return endpoint.protocol === 'https:' || (localDevelopment && endpoint.protocol === 'http:');
+    } catch {
+      return false;
+    }
+  };
+
+  form?.addEventListener('input', () => {
+    if (status?.textContent) setFormStatus('');
+  });
+
+  form?.addEventListener('submit', async (event) => {
     event.preventDefault();
+    setFormStatus('');
+
     if (!form.checkValidity()) {
       form.reportValidity();
-      if (status) status.textContent = 'Uzupełnij wymagane pola formularza.';
+      setFormStatus('Uzupełnij wymagane pola formularza.', 'error');
       return;
     }
 
-    const name = new FormData(form).get('name');
-    if (status) {
-      status.textContent = `Dziękujemy${name ? `, ${name}` : ''}. Formularz działa poprawnie. W kolejnym etapie podłączymy bezpieczną wysyłkę wiadomości.`;
+    const data = new FormData(form);
+    if (String(data.get('website') || '').trim()) {
+      setFormStatus('Dziękujemy. Wiadomość została przyjęta.', 'success');
+      form.reset();
+      return;
     }
-    form.reset();
+
+    const config = await formConfigPromise;
+    if (performance.now() - formStartedAt < Number(config.minimumFillTimeMs)) {
+      setFormStatus('Formularz został wypełniony zbyt szybko. Odczekaj chwilę i spróbuj ponownie.', 'error');
+      return;
+    }
+
+    if (!config.formEndpoint) {
+      setFormStatus('Formularz jest gotowy, ale oczekuje na zatwierdzony adres odbiorczy. Dane nie zostały wysłane.', 'info');
+      return;
+    }
+    if (!isAllowedEndpoint(config.formEndpoint)) {
+      setFormStatus('Konfiguracja formularza jest nieprawidłowa. Wysyłka została bezpiecznie zablokowana.', 'error');
+      return;
+    }
+
+    const cooldownKey = 'ze8es:last-form-submit';
+    const lastSubmit = Number(sessionStorage.getItem(cooldownKey) || 0);
+    const cooldown = Number(config.clientCooldownMs);
+    if (Date.now() - lastSubmit < cooldown) {
+      const seconds = Math.ceil((cooldown - (Date.now() - lastSubmit)) / 1000);
+      setFormStatus(`Odczekaj ${seconds} s przed kolejną wiadomością.`, 'error');
+      return;
+    }
+
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), Number(config.requestTimeoutMs));
+    const originalLabel = submitButton?.textContent || 'Wyślij zapytanie →';
+
+    try {
+      form.setAttribute('aria-busy', 'true');
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = 'Wysyłanie…';
+      }
+      setFormStatus('Wysyłanie wiadomości…', 'info');
+
+      const payload = Object.fromEntries(data.entries());
+      delete payload.website;
+      payload.privacyAccepted = data.get('privacy') === 'on';
+      payload.source = 'ZE8ES website';
+      payload.submittedAt = new Date().toISOString();
+
+      const response = await fetch(config.formEndpoint, {
+        method: 'POST',
+        mode: 'cors',
+        credentials: 'omit',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(payload),
+        signal: controller.signal,
+      });
+
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+      sessionStorage.setItem(cooldownKey, String(Date.now()));
+      form.reset();
+      formStartedAt = performance.now();
+      setFormStatus('Dziękujemy. Wiadomość została wysłana.', 'success');
+    } catch (error) {
+      const message = error instanceof DOMException && error.name === 'AbortError'
+        ? 'Wysyłanie trwało zbyt długo. Spróbuj ponownie.'
+        : 'Nie udało się wysłać wiadomości. Spróbuj ponownie później.';
+      setFormStatus(message, 'error');
+    } finally {
+      window.clearTimeout(timeout);
+      form.removeAttribute('aria-busy');
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = originalLabel;
+      }
+    }
   });
 
   const year = document.querySelector('[data-year]');

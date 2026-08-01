@@ -1,0 +1,57 @@
+name: Backend formularza kontaktowego
+description: Przekaż zatwierdzoną konfigurację usługi odbierającej formularz.
+title: "Formularz: konfiguracja backendu"
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Nie wpisuj tutaj kluczy API, tokenów, haseł ani sekretów. Sekrety należy dodać wyłącznie jako GitHub Actions Secrets albo w panelu wybranego hostingu.
+  - type: dropdown
+    id: backend_type
+    attributes:
+      label: Typ rozwiązania
+      options:
+        - Własny endpoint
+        - Cloudflare Worker
+        - Usługa formularzowa
+        - Funkcja serverless
+        - Jeszcze nie wybrano
+    validations:
+      required: true
+  - type: input
+    id: endpoint
+    attributes:
+      label: Publiczny adres endpointu HTTPS
+      placeholder: https://api.example.com/contact
+  - type: input
+    id: recipient
+    attributes:
+      label: Zatwierdzony adres odbiorczy
+      description: Adres może zostać użyty w konfiguracji backendu, ale nie musi być wyświetlany publicznie.
+  - type: textarea
+    id: provider
+    attributes:
+      label: Dostawca i lokalizacja przetwarzania
+      description: Nazwa dostawcy, region serwerów i informacje potrzebne do polityki prywatności.
+  - type: textarea
+    id: anti_spam
+    attributes:
+      label: Ochrona antyspamowa
+      placeholder: Rate limiting, Turnstile, honeypot, walidacja po stronie serwera
+  - type: textarea
+    id: retention
+    attributes:
+      label: Retencja danych
+      description: Jak długo wiadomości będą przechowywane i jak będą usuwane?
+  - type: checkboxes
+    id: security
+    attributes:
+      label: Wymagania bezpieczeństwa
+      options:
+        - label: Endpoint używa HTTPS.
+          required: true
+        - label: Sekrety nie zostaną zapisane w kodzie frontendu ani w treści Issue.
+          required: true
+        - label: Backend będzie walidował dane i ograniczał liczbę żądań.
+          required: true

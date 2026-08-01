@@ -1,4 +1,3 @@
+# Wersja rozwojowa ZE8ES — indeksowanie zostanie włączone po potwierdzeniu domeny.
 User-agent: *
-Allow: /
-
-Sitemap: https://totalnybet-create.github.io/ZE8EZ/sitemap.xml
+Disallow: /

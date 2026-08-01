@@ -48,13 +48,19 @@ jobs:
           ZE8ES_SCREENSHOT_DIR: visual-artifacts
         run: node scripts/visual_check.mjs
 
+      - name: Collect server log
+        if: always()
+        run: |
+          mkdir -p visual-artifacts
+          if [ -f /tmp/ze8es-http.log ]; then
+            cp /tmp/ze8es-http.log visual-artifacts/server.log
+          fi
+
       - name: Upload visual artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: ze8es-visual-artifacts
-          path: |
-            visual-artifacts
-            /tmp/ze8es-http.log
+          path: visual-artifacts
           if-no-files-found: warn
           retention-days: 14

@@ -39,7 +39,7 @@ for (const viewport of viewports) {
     }
 
     await page.locator('main').waitFor({ state: 'visible' });
-    await page.locator('footer').scrollIntoViewIfNeeded();
+    await page.locator('.site-footer').scrollIntoViewIfNeeded();
     await page.waitForTimeout(250);
 
     const layout = await page.evaluate(() => ({
@@ -48,13 +48,13 @@ for (const viewport of viewports) {
       bodyWidth: document.body.scrollWidth,
       h1Count: document.querySelectorAll('h1').length,
       hasMain: Boolean(document.querySelector('main')),
-      hasFooter: Boolean(document.querySelector('footer')),
+      hasFooter: Boolean(document.querySelector('.site-footer')),
     }));
 
     const overflow = Math.max(layout.documentWidth, layout.bodyWidth) - layout.viewportWidth;
     if (overflow > 1) failures.push(`${viewport.name}: poziome przewijanie ${overflow}px`);
     if (layout.h1Count !== 1) failures.push(`${viewport.name}: znaleziono ${layout.h1Count} elementów h1`);
-    if (!layout.hasMain || !layout.hasFooter) failures.push(`${viewport.name}: brak main lub footer`);
+    if (!layout.hasMain || !layout.hasFooter) failures.push(`${viewport.name}: brak main lub głównej stopki`);
 
     if (viewport.width <= 768) {
       const menuButton = page.locator('.menu-toggle');

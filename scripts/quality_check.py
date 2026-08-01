@@ -167,6 +167,7 @@ def main() -> None:
         ROOT / "404.html",
         ROOT / "robots.txt",
         ROOT / "sitemap.xml",
+        ROOT / ".nojekyll",
         ROOT / "assets/styles.css",
         ROOT / "assets/visual-upgrades.css",
         ROOT / "assets/script.js",
@@ -177,6 +178,12 @@ def main() -> None:
         ROOT / "assets/project-store.svg",
         ROOT / "docs/IMPLEMENTATION_PLAN.md",
         ROOT / "docs/STATUS.md",
+        ROOT / "docs/QA_MATRIX.md",
+        ROOT / "scripts/visual_check.mjs",
+        ROOT / ".github/workflows/quality.yml",
+        ROOT / ".github/workflows/lighthouse.yml",
+        ROOT / ".github/workflows/visual-regression.yml",
+        ROOT / ".github/workflows/deploy-pages.yml",
     ]
     missing = [str(path.relative_to(ROOT)) for path in required if not path.exists()]
     if missing:
@@ -203,6 +210,10 @@ def main() -> None:
     css = (ROOT / "assets/styles.css").read_text(encoding="utf-8")
     visual_css = (ROOT / "assets/visual-upgrades.css").read_text(encoding="utf-8")
     javascript = (ROOT / "assets/script.js").read_text(encoding="utf-8")
+    visual_test = (ROOT / "scripts/visual_check.mjs").read_text(encoding="utf-8")
+    visual_workflow = (ROOT / ".github/workflows/visual-regression.yml").read_text(encoding="utf-8")
+    lighthouse_workflow = (ROOT / ".github/workflows/lighthouse.yml").read_text(encoding="utf-8")
+
     if "@media (max-width:" not in css or "@media (max-width:" not in visual_css:
         fail("Brak reguł responsywnych w arkuszach CSS")
     if "prefers-reduced-motion" not in css or "prefers-reduced-motion" not in visual_css:
@@ -212,7 +223,17 @@ def main() -> None:
     if "pointerdown" not in javascript or "ArrowRight" not in javascript:
         fail("Karuzela nie ma pełnej obsługi dotyku i klawiatury")
 
-    print("OK: HTML, SEO, odnośniki, grafiki SVG, CSS, responsywność i dostępność przeszły kontrolę.")
+    for width in (1440, 1024, 768, 390, 320):
+        if f"width: {width}" not in visual_test:
+            fail(f"Test wizualny nie obejmuje szerokości {width}px")
+    if "documentElement.scrollWidth" not in visual_test or "pageerror" not in visual_test:
+        fail("Test wizualny nie sprawdza poziomego przewijania lub błędów JavaScript")
+    if "scripts/visual_check.mjs" not in visual_workflow or "upload-artifact" not in visual_workflow:
+        fail("Workflow testów wizualnych nie uruchamia skryptu lub nie zapisuje artefaktów")
+    if "@lhci/cli" not in lighthouse_workflow or "upload-artifact" not in lighthouse_workflow:
+        fail("Workflow Lighthouse jest niekompletny")
+
+    print("OK: HTML, SEO, odnośniki, grafiki SVG, CSS, responsywność, dostępność i infrastruktura testów przeszły kontrolę.")
 
 
 if __name__ == "__main__":

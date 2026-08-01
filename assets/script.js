@@ -1,12 +1,4 @@
 (() => {
-  const visualStylesPath = 'assets/visual-upgrades.css';
-  if (!document.querySelector(`link[href="${visualStylesPath}"]`)) {
-    const visualStyles = document.createElement('link');
-    visualStyles.rel = 'stylesheet';
-    visualStyles.href = visualStylesPath;
-    document.head.append(visualStyles);
-  }
-
   document.documentElement.classList.add('js');
 
   const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');

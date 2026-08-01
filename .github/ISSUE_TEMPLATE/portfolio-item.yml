@@ -1,0 +1,61 @@
+name: Realizacja do portfolio
+description: Dodaj zatwierdzony projekt lub studium przypadku do portfolio ZE8ES.
+title: "Portfolio: "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Dodawaj wyłącznie materiały, do których masz prawo i zgodę na publikację. Nie wpisuj niepotwierdzonych wyników ani opinii.
+  - type: input
+    id: project_name
+    attributes:
+      label: Nazwa projektu
+    validations:
+      required: true
+  - type: input
+    id: industry
+    attributes:
+      label: Branża
+    validations:
+      required: true
+  - type: textarea
+    id: goal
+    attributes:
+      label: Cel projektu
+      description: Jaki problem miał rozwiązać projekt?
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Zakres wykonanych prac
+      placeholder: Strategia, UX/UI, kod, integracje, wdrożenie
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Udokumentowany rezultat
+      description: Pozostaw puste, jeżeli wynik nie może zostać potwierdzony.
+  - type: input
+    id: public_url
+    attributes:
+      label: Publiczny adres projektu
+      placeholder: https://example.com/
+  - type: textarea
+    id: assets
+    attributes:
+      label: Materiały graficzne
+      description: Wskaż pliki lub zrzuty ekranu oraz źródło praw do ich publikacji.
+    validations:
+      required: true
+  - type: checkboxes
+    id: permissions
+    attributes:
+      label: Zgody
+      options:
+        - label: Mam prawo do publikacji nazwy i materiałów projektu.
+          required: true
+        - label: Opis i podane wyniki są prawdziwe oraz możliwe do udokumentowania.
+          required: true

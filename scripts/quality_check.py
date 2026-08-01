@@ -8,6 +8,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlparse
 from xml.etree import ElementTree
+import json
 import re
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -138,6 +139,15 @@ def main() -> None:
     if parser.images_without_alt:
         fail(f"Obrazy bez atrybutu alt: {', '.join(parser.images_without_alt)}")
 
+    for required_fragment, label in (
+        ('name="website"', "pole antyspamowe"),
+        ('name="privacy"', "wymagana zgoda formularza"),
+        ('href="privacy.html"', "odnośnik do polityki prywatności"),
+        ('aria-live="polite"', "dostępny komunikat formularza"),
+    ):
+        if required_fragment not in source:
+            fail(f"Brak elementu formularza: {label}")
+
     duplicates = [item for item, count in Counter(parser.ids).items() if count > 1]
     if duplicates:
         fail(f"Powtarzające się identyfikatory: {', '.join(duplicates)}")
@@ -166,13 +176,16 @@ def main() -> None:
     required = [
         ROOT / "README.md",
         ROOT / "404.html",
+        ROOT / "privacy.html",
         ROOT / "robots.txt",
         ROOT / "sitemap.xml",
+        ROOT / "lighthouserc.cjs",
         ROOT / ".nojekyll",
         ROOT / "assets/styles.css",
         ROOT / "assets/visual-upgrades.css",
         ROOT / "assets/responsive-fixes.css",
         ROOT / "assets/script.js",
+        ROOT / "assets/site-config.json",
         ROOT / "assets/logo-mark.svg",
         ROOT / "assets/hero-visual.svg",
         ROOT / "assets/project-local.svg",
@@ -181,6 +194,7 @@ def main() -> None:
         ROOT / "docs/IMPLEMENTATION_PLAN.md",
         ROOT / "docs/STATUS.md",
         ROOT / "docs/QA_MATRIX.md",
+        ROOT / "docs/LEGAL_INPUTS.md",
         ROOT / "scripts/visual_check.mjs",
         ROOT / ".github/workflows/quality.yml",
         ROOT / ".github/workflows/lighthouse.yml",
@@ -213,6 +227,23 @@ def main() -> None:
         except ElementTree.ParseError as error:
             fail(f"Niepoprawny plik SVG {svg_file.relative_to(ROOT)}: {error}")
 
+    try:
+        form_config = json.loads((ROOT / "assets/site-config.json").read_text(encoding="utf-8"))
+    except json.JSONDecodeError as error:
+        fail(f"Niepoprawny JSON konfiguracji formularza: {error}")
+    endpoint = str(form_config.get("formEndpoint", "")).strip()
+    if endpoint and not endpoint.startswith("https://"):
+        fail("Produkcyjny endpoint formularza musi używać HTTPS")
+    for key in ("requestTimeoutMs", "minimumFillTimeMs", "clientCooldownMs"):
+        if not isinstance(form_config.get(key), int) or form_config[key] <= 0:
+            fail(f"Niepoprawna wartość {key} w konfiguracji formularza")
+
+    privacy = (ROOT / "privacy.html").read_text(encoding="utf-8")
+    if 'content="noindex,nofollow"' not in privacy:
+        fail("Robocza polityka prywatności musi pozostać poza indeksem")
+    if "Dokument roboczy" not in privacy or "[pełna nazwa firmy" not in privacy:
+        fail("Polityka prywatności nie sygnalizuje roboczego statusu lub brakujących danych")
+
     css = (ROOT / "assets/styles.css").read_text(encoding="utf-8")
     visual_css = (ROOT / "assets/visual-upgrades.css").read_text(encoding="utf-8")
     responsive_css = (ROOT / "assets/responsive-fixes.css").read_text(encoding="utf-8")
@@ -232,6 +263,9 @@ def main() -> None:
         fail("Brak obserwatora sekcji i elementów interfejsu")
     if "pointerdown" not in javascript or "ArrowRight" not in javascript:
         fail("Karuzela nie ma pełnej obsługi dotyku i klawiatury")
+    for form_security_fragment in ("AbortController", "assets/site-config.json", "sessionStorage", "formEndpoint"):
+        if form_security_fragment not in javascript:
+            fail(f"Brak zabezpieczenia formularza: {form_security_fragment}")
 
     for width in (1440, 1024, 768, 390, 320):
         if f"width: {width}" not in visual_test:
@@ -243,7 +277,7 @@ def main() -> None:
     if "@lhci/cli" not in lighthouse_workflow or "upload-artifact" not in lighthouse_workflow:
         fail("Workflow Lighthouse jest niekompletny")
 
-    print("OK: HTML, SEO, odnośniki, grafiki SVG, CSS, responsywność, dostępność i infrastruktura testów przeszły kontrolę.")
+    print("OK: HTML, SEO, grafiki, responsywność, formularz, prywatność i infrastruktura testów przeszły kontrolę.")
 
 
 if __name__ == "__main__":

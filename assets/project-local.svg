@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="80" y1="480" x2="810" y2="30" gradientUnits="userSpaceOnUse"><stop stop-color="#10265D"/><stop offset=".55" stop-color="#343093"/><stop offset="1" stop-color="#7A35B2"/></linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#2D83FF"/><stop offset=".55" stop-color="#6C4CFF"/><stop offset="1" stop-color="#BE43FF"/></linearGradient>
+    <filter id="s" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="22" stdDeviation="22" flood-color="#02040A" flood-opacity=".55"/></filter>
+  </defs>
+  <rect width="900" height="520" rx="28" fill="url(#bg)"/>
+  <circle cx="745" cy="125" r="190" fill="#714CFF" fill-opacity=".18"/>
+  <path d="M42 430C228 560 551 477 859 136" stroke="#A454FF" stroke-opacity=".5" stroke-width="3"/>
+  <g filter="url(#s)" transform="rotate(-4 600 292)">
+    <rect x="304" y="96" width="505" height="344" rx="22" fill="#101726" stroke="#FFFFFF" stroke-opacity=".2"/>
+    <rect x="323" y="113" width="467" height="310" rx="14" fill="#0A0F1B"/>
+    <rect x="323" y="113" width="467" height="47" rx="14" fill="#121B2B"/>
+    <circle cx="347" cy="136" r="6" fill="#6C4CFF"/>
+    <text x="362" y="141" fill="white" font-family="Arial" font-size="14" font-weight="700">Legnicki Rynek</text>
+    <text x="612" y="141" fill="#8994A7" font-family="Arial" font-size="9">OGŁOSZENIA</text>
+    <text x="680" y="141" fill="#8994A7" font-family="Arial" font-size="9">WYDARZENIA</text>
+    <rect x="327" y="174" width="459" height="85" rx="11" fill="url(#accent)" fill-opacity=".85"/>
+    <text x="350" y="205" fill="white" font-family="Arial" font-size="10">PORTAL DLA MIESZKAŃCÓW</text>
+    <text x="350" y="232" fill="white" font-family="Arial" font-size="22" font-weight="700">Wszystko, czego szukasz lokalnie.</text>
+    <rect x="327" y="273" width="216" height="132" rx="12" fill="#121B2A" stroke="#FFFFFF" stroke-opacity=".08"/>
+    <rect x="343" y="289" width="184" height="70" rx="8" fill="#1A335B"/>
+    <circle cx="399" cy="324" r="26" fill="#2B72D0"/>
+    <path d="M360 348L395 313L415 332L438 307L510 359H343Z" fill="#4C8FE5"/>
+    <text x="344" y="379" fill="white" font-family="Arial" font-size="11" font-weight="700">Najnowsze ogłoszenia</text>
+    <text x="344" y="394" fill="#7E899B" font-family="Arial" font-size="8">Oferty z Legnicy i okolic</text>
+    <rect x="558" y="273" width="228" height="62" rx="12" fill="#121B2A" stroke="#FFFFFF" stroke-opacity=".08"/>
+    <circle cx="582" cy="304" r="13" fill="#6C4CFF" fill-opacity=".35"/>
+    <rect x="606" y="291" width="87" height="8" rx="4" fill="#F7F8FC" fill-opacity=".8"/>
+    <rect x="606" y="308" width="130" height="6" rx="3" fill="#FFFFFF" fill-opacity=".11"/>
+    <rect x="558" y="343" width="228" height="62" rx="12" fill="#121B2A" stroke="#FFFFFF" stroke-opacity=".08"/>
+    <circle cx="582" cy="374" r="13" fill="#2D83FF" fill-opacity=".35"/>
+    <rect x="606" y="361" width="101" height="8" rx="4" fill="#F7F8FC" fill-opacity=".8"/>
+    <rect x="606" y="378" width="145" height="6" rx="3" fill="#FFFFFF" fill-opacity=".11"/>
+  </g>
+  <g filter="url(#s)" transform="rotate(7 677 352)">
+    <rect x="635" y="228" width="126" height="252" rx="25" fill="#0A0E17" stroke="#FFFFFF" stroke-opacity=".32"/>
+    <rect x="645" y="241" width="106" height="226" rx="18" fill="#111827"/>
+    <rect x="676" y="249" width="45" height="12" rx="6" fill="#03050A"/>
+    <rect x="657" y="277" width="82" height="72" rx="12" fill="url(#accent)"/>
+    <text x="667" y="298" fill="white" font-family="Arial" font-size="7">DZISIAJ W LEGNICY</text>
+    <text x="667" y="319" fill="white" font-family="Arial" font-size="13" font-weight="700">12 wydarzeń</text>
+    <path d="M666 337H729" stroke="#FFFFFF" stroke-opacity=".35"/>
+    <rect x="657" y="362" width="82" height="37" rx="9" fill="#192235"/>
+    <circle cx="673" cy="380" r="8" fill="#2D83FF"/>
+    <rect x="686" y="372" width="39" height="6" rx="3" fill="#FFFFFF" fill-opacity=".65"/>
+    <rect x="686" y="385" width="28" height="4" rx="2" fill="#FFFFFF" fill-opacity=".12"/>
+    <rect x="657" y="408" width="82" height="37" rx="9" fill="#192235"/>
+    <circle cx="673" cy="426" r="8" fill="#BE43FF"/>
+    <rect x="686" y="418" width="39" height="6" rx="3" fill="#FFFFFF" fill-opacity=".65"/>
+    <rect x="686" y="431" width="28" height="4" rx="2" fill="#FFFFFF" fill-opacity=".12"/>
+  </g>
+</svg>

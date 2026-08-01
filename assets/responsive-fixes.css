@@ -3,6 +3,7 @@
 html, body { min-width: 0; }
 main, section, .container, .hero-grid, .results-grid, .about-grid, .contact-grid { min-width: 0; }
 h1, h2, h3, p, a, span { overflow-wrap: anywhere; }
+.brand > span { margin-left: -10px; }
 
 .field-honeypot {
   position: absolute !important;
@@ -90,21 +91,25 @@ h1, h2, h3, p, a, span { overflow-wrap: anywhere; }
   :root { --header-height: 66px; }
   .container { width: min(calc(100% - 28px), var(--container)); }
   .brand { gap: 8px; font-size: 23px; letter-spacing: .08em; }
+  .brand > span { margin-left: -8px; }
   .brand img { width: 30px; height: 30px; }
   .menu-toggle { width: 42px; height: 42px; }
-  .hero { padding: 98px 0 56px; }
-  .hero h1 { max-width: 100%; font-size: clamp(40px, 11.6vw, 50px); line-height: 1.02; }
-  .hero-copy > p { margin-bottom: 23px; font-size: 14px; line-height: 1.6; }
+  .hero { min-height: auto; padding: 94px 0 48px; }
+  .hero-grid { gap: 6px; }
+  .hero h1 { max-width: 100%; font-size: clamp(39px, 10.8vw, 46px); line-height: 1.025; }
+  .hero-copy > p { margin-bottom: 21px; font-size: 14px; line-height: 1.55; }
   .hero-actions { display: grid; grid-template-columns: 1fr; }
   .hero-actions .btn { width: 100%; min-height: 50px; }
-  .trust { margin-top: 30px; }
+  .trust { margin-top: 28px; }
   .trust-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   .trust-list span { min-width: 0; padding: 6px; }
-  .hero-visual { width: calc(100% + 28px); min-height: 360px; margin: -12px -14px -22px; background-size: 118% auto; }
+  .hero-visual { width: calc(100% + 28px); min-height: 340px; margin: -24px -14px -42px; background-size: 112% auto; }
+  #uslugi.section { padding-top: 64px; }
   .section { padding: 72px 0; }
-  h2 { font-size: clamp(34px, 10vw, 43px); }
+  .section-heading { margin-bottom: 34px; }
+  h2 { font-size: clamp(33px, 9.4vw, 41px); }
   .services-grid, .testimonials-grid { grid-template-columns: 1fr; }
-  .service-card { min-height: 220px; padding: 22px 18px; }
+  .service-card { min-height: 205px; padding: 22px 18px; }
   .metrics { gap: 8px; }
   .metric { padding: 10px 5px; }
   .metric strong { font-size: 21px; }
@@ -132,10 +137,10 @@ h1, h2, h3, p, a, span { overflow-wrap: anywhere; }
 @media (max-width: 350px) {
   .container { width: min(calc(100% - 22px), var(--container)); }
   .brand { font-size: 21px; }
-  .hero h1 { font-size: clamp(37px, 11.5vw, 42px); }
+  .hero h1 { font-size: clamp(36px, 10.8vw, 40px); }
   .eyebrow { font-size: 8px; letter-spacing: .11em; }
   .trust-list { grid-template-columns: 1fr; }
-  .hero-visual { width: calc(100% + 22px); min-height: 315px; margin-inline: -11px; background-size: 126% auto; }
+  .hero-visual { width: calc(100% + 22px); min-height: 300px; margin-inline: -11px; background-size: 120% auto; }
   .metrics { grid-template-columns: 1fr; }
   .portfolio-heading { align-items: flex-start; flex-direction: column; }
   .project-card { min-height: 445px; }

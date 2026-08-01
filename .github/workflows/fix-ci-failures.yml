@@ -1,0 +1,131 @@
+name: Fix failing CI checks
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/fix-ci-failures.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply verified CI fixes
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          def replace_once(path: str, old: str, new: str, label: str) -> None:
+              file = Path(path)
+              source = file.read_text(encoding='utf-8')
+              if new in source and old not in source:
+                  return
+              count = source.count(old)
+              if count != 1:
+                  raise RuntimeError(f'{label}: oczekiwano jednego wystąpienia, znaleziono {count}')
+              file.write_text(source.replace(old, new, 1), encoding='utf-8')
+
+          replace_once(
+              'scripts/visual_check.mjs',
+              "await page.locator('footer').scrollIntoViewIfNeeded();",
+              "await page.locator('.site-footer').scrollIntoViewIfNeeded();",
+              'selektor przewijania do stopki',
+          )
+          replace_once(
+              'scripts/visual_check.mjs',
+              "hasFooter: Boolean(document.querySelector('footer')),
+",
+              "hasFooter: Boolean(document.querySelector('.site-footer')),
+",
+              'kontrola obecności stopki',
+          )
+          replace_once(
+              'index.html',
+              '<div class="hero-visual reveal" aria-label=',
+              '<div class="hero-visual reveal" role="img" aria-label=',
+              'rola grafiki hero',
+          )
+          replace_once(
+              'assets/script.js',
+              "      slide.setAttribute('aria-hidden', String(!isCurrent));\n      slide.tabIndex = isCurrent ? 0 : -1;\n",
+              "      slide.setAttribute('aria-hidden', String(!isCurrent));\n      slide.toggleAttribute('inert', !isCurrent);\n      slide.tabIndex = isCurrent ? 0 : -1;\n",
+              'fokus nieaktywnych slajdów',
+          )
+
+          Path('lighthouserc.cjs').write_text("""module.exports = {
+            ci: {
+              collect: {
+                startServerCommand: 'python3 -u -m http.server 8080 --bind 127.0.0.1',
+                startServerReadyPattern: 'Serving HTTP',
+                url: ['http://127.0.0.1:8080/'],
+                numberOfRuns: 3,
+                settings: {
+                  chromeFlags: '--headless --no-sandbox --disable-gpu',
+                  emulatedFormFactor: 'mobile',
+                  throttlingMethod: 'simulate'
+                }
+              },
+              assert: {
+                preset: 'lighthouse:recommended',
+                assertions: {
+                  'categories:performance': ['error', { minScore: 0.9 }],
+                  'categories:accessibility': ['error', { minScore: 0.95 }],
+                  'categories:best-practices': ['error', { minScore: 0.95 }],
+                  'categories:seo': ['warn', { minScore: 0.65 }],
+                  'first-contentful-paint': ['warn', { maxNumericValue: 2200 }],
+                  'largest-contentful-paint': ['warn', { maxNumericValue: 2800 }],
+                  'cumulative-layout-shift': ['error', { maxNumericValue: 0.1 }],
+                  'total-blocking-time': ['warn', { maxNumericValue: 300 }],
+                  'speed-index': ['warn', { maxNumericValue: 3400 }],
+                  'is-crawlable': 'off',
+                  'uses-responsive-images': 'off',
+                  'unsized-images': 'error',
+                  'uses-text-compression': 'off',
+                  'uses-long-cache-ttl': 'off',
+                  'cache-insight': 'off',
+                  'document-latency-insight': 'off',
+                  'network-dependency-tree-insight': 'off',
+                  'unminified-css': 'warn',
+                  'render-blocking-insight': 'warn',
+                  'render-blocking-resources': 'warn'
+                }
+              },
+              upload: {
+                target: 'filesystem',
+                outputDir: './lighthouse-reports'
+              }
+            }
+          };
+          """, encoding='utf-8')
+
+          quality = Path('scripts/quality_check.py')
+          source = quality.read_text(encoding='utf-8')
+          marker = "    if '#contact-form' in javascript or \"formEndpoint\" in javascript:\n        fail(\"JavaScript nadal zawiera nieużywaną obsługę formularza\")\n"
+          addition = marker + "    if \"toggleAttribute('inert'\" not in javascript:\n        fail(\"Karuzela nie usuwa nieaktywnych slajdów z kolejności fokusu\")\n    if 'class=\"hero-visual reveal\" role=\"img\"' not in source:\n        fail(\"Grafika hero nie ma prawidłowej roli dostępnościowej\")\n"
+          if addition not in source:
+              if source.count(marker) != 1:
+                  raise RuntimeError('Nie znaleziono miejsca aktualizacji kontroli jakości')
+              quality.write_text(source.replace(marker, addition, 1), encoding='utf-8')
+          PY
+
+      - name: Run static quality checks
+        run: python3 scripts/quality_check.py
+
+      - name: Commit fixes and remove one-time workflow
+        run: |
+          git rm .github/workflows/fix-ci-failures.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html assets/script.js scripts/visual_check.mjs scripts/quality_check.py lighthouserc.cjs
+          git commit -m "fix: repair visual and Lighthouse checks"
+          git push origin HEAD:main

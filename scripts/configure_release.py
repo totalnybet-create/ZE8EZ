@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Konfiguruje potwierdzony publiczny adres ZE8ES w plikach SEO i stronie 404."""
+"""Konfiguruje publiczny adres ZE8ES bez włączania indeksowania bez jawnej zgody."""
 
 from __future__ import annotations
 
@@ -40,7 +40,17 @@ def remove_existing_seo_urls(source: str) -> str:
     return source
 
 
-def build_index(source: str, base_url: str) -> str:
+def set_robots_meta(source: str, *, enable_indexing: bool) -> str:
+    value = "index,follow" if enable_indexing else "noindex,nofollow"
+    pattern = r'(<meta\s+name=["\']robots["\']\s+content=["\'])[^"\']*(["\']\s*>)'
+    source, count = re.subn(pattern, rf"\1{value}\2", source, flags=re.IGNORECASE)
+    if count != 1:
+        raise ValueError("Nie udało się jednoznacznie ustawić meta robots w index.html.")
+    return source
+
+
+def build_index(source: str, base_url: str, *, enable_indexing: bool = False) -> str:
+    source = set_robots_meta(source, enable_indexing=enable_indexing)
     source = remove_existing_seo_urls(source)
     tags = (
         f'  <link rel="canonical" href="{base_url}">\n'
@@ -57,11 +67,11 @@ def build_index(source: str, base_url: str) -> str:
 def build_error_page(source: str, base_url: str) -> str:
     root_path = release_root_path(base_url)
     replacements = {
-        r'(<link\s+rel="icon"\s+href=")[^"]+("\s+type="image/svg\+xml">)': rf'\1{root_path}assets/logo-mark.svg\2',
-        r'(<link\s+rel="stylesheet"\s+href=")[^"]+(">)': rf'\1{root_path}assets/error-page.css\2',
-        r'(<a\s+class="brand"\s+href=")[^"]+("\s+aria-label=)': rf'\1{root_path}\2',
-        r'(<img\s+src=")[^"]+("\s+alt=""\s+width="34")': rf'\1{root_path}assets/logo-mark.svg\2',
-        r'(<a\s+class="button"\s+href=")[^"]+(">)': rf'\1{root_path}\2',
+        r'(<link\s+rel="icon"\s+href=")[^"]+("\s+type="image/svg\+xml">)': rf"\1{root_path}assets/logo-mark.svg\2",
+        r'(<link\s+rel="stylesheet"\s+href=")[^"]+(">)': rf"\1{root_path}assets/error-page.css\2",
+        r'(<a\s+class="brand"\s+href=")[^"]+("\s+aria-label=)': rf"\1{root_path}\2",
+        r'(<img\s+src=")[^"]+("\s+alt=""\s+width="34")': rf"\1{root_path}assets/logo-mark.svg\2",
+        r'(<a\s+class="button"\s+href=")[^"]+(">)': rf"\1{root_path}\2",
     }
     for pattern, replacement in replacements.items():
         source, count = re.subn(pattern, replacement, source)
@@ -70,7 +80,13 @@ def build_error_page(source: str, base_url: str) -> str:
     return source
 
 
-def build_robots(base_url: str) -> str:
+def build_robots(base_url: str, *, enable_indexing: bool = False) -> str:
+    if not enable_indexing:
+        return (
+            "# Indeksowanie ZE8ES pozostaje wyłączone do osobnej zgody właściciela.\n"
+            "User-agent: *\n"
+            "Disallow: /\n"
+        )
     return (
         "User-agent: *\n"
         "Allow: /\n\n"
@@ -78,7 +94,13 @@ def build_robots(base_url: str) -> str:
     )
 
 
-def build_sitemap(base_url: str) -> str:
+def build_sitemap(base_url: str, *, enable_indexing: bool = False) -> str:
+    if not enable_indexing:
+        return (
+            '<?xml version="1.0" encoding="UTF-8"?>\n'
+            "<!-- Indeksowanie pozostaje wyłączone; mapa nie publikuje adresów. -->\n"
+            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>\n'
+        )
     return (
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
@@ -95,23 +117,36 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("base_url", help="Potwierdzony publiczny adres HTTPS, np. https://example.com/")
     parser.add_argument("--dry-run", action="store_true", help="Sprawdź wynik bez zapisywania plików.")
+    parser.add_argument(
+        "--enable-indexing",
+        action="store_true",
+        help="Jawnie włącz index,follow, Allow i publiczną sitemapę.",
+    )
     args = parser.parse_args()
 
     base_url = normalize_base_url(args.base_url)
-    index_content = build_index(INDEX.read_text(encoding="utf-8"), base_url)
+    index_content = build_index(
+        INDEX.read_text(encoding="utf-8"),
+        base_url,
+        enable_indexing=args.enable_indexing,
+    )
     error_page_content = build_error_page(ERROR_PAGE.read_text(encoding="utf-8"), base_url)
-    robots_content = build_robots(base_url)
-    sitemap_content = build_sitemap(base_url)
+    robots_content = build_robots(base_url, enable_indexing=args.enable_indexing)
+    sitemap_content = build_sitemap(base_url, enable_indexing=args.enable_indexing)
 
+    mode = "indeksowanie włączone" if args.enable_indexing else "indeksowanie wyłączone"
     if args.dry_run:
-        print(f"OK: konfiguracja dla {base_url} jest poprawna. Pliki nie zostały zmienione.")
+        print(
+            f"OK: konfiguracja dla {base_url} jest poprawna ({mode}). "
+            "Pliki nie zostały zmienione."
+        )
         return
 
     INDEX.write_text(index_content, encoding="utf-8")
     ERROR_PAGE.write_text(error_page_content, encoding="utf-8")
     ROBOTS.write_text(robots_content, encoding="utf-8")
     SITEMAP.write_text(sitemap_content, encoding="utf-8")
-    print(f"OK: skonfigurowano publiczny adres {base_url}")
+    print(f"OK: skonfigurowano publiczny adres {base_url} ({mode}).")
 
 
 if __name__ == "__main__":

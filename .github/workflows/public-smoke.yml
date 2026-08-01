@@ -17,7 +17,7 @@ jobs:
   public-smoke:
     if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 15
 
     steps:
       - name: Checkout repository
@@ -28,20 +28,195 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Install Chromium smoke-test dependencies
+        run: |
+          python -m pip install --disable-pip-version-check playwright==1.54.0
+          python -m playwright install --with-deps chromium
+
       - name: Wait for Pages cache propagation
         run: sleep 12
 
-      - name: Check deployed site
+      - name: Check production domain, redirects, TLS and browser runtime
         env:
-          ZE8ES_PUBLIC_URL: https://totalnybet-create.github.io/ZE8EZ/
+          ZE8ES_PUBLIC_URL: https://ze8es.run.place/
+        run: |
+          python - <<'PY'
+          from __future__ import annotations
+
+          import json
+          import socket
+          import ssl
+          import time
+          from pathlib import Path
+          from urllib.error import HTTPError, URLError
+          from urllib.request import HTTPRedirectHandler, Request, build_opener
+
+          from playwright.sync_api import sync_playwright
+
+          target = "https://ze8es.run.place/"
+          variants = (
+              "http://ze8es.run.place/",
+              "https://ze8es.run.place/",
+              "http://www.ze8es.run.place/",
+              "https://www.ze8es.run.place/",
+          )
+          user_agent = "ZE8ES-production-domain-check/1.0"
+          checks: list[dict[str, object]] = []
+
+
+          class RedirectRecorder(HTTPRedirectHandler):
+              def __init__(self) -> None:
+                  super().__init__()
+                  self.chain: list[dict[str, object]] = []
+
+              def redirect_request(self, req, fp, code, msg, headers, newurl):
+                  self.chain.append({"from": req.full_url, "status": code, "to": newurl})
+                  return super().redirect_request(req, fp, code, msg, headers, newurl)
+
+
+          def record(name: str, passed: bool, details: object) -> None:
+              checks.append({"name": name, "passed": passed, "details": details})
+
+
+          for url in variants:
+              recorder = RedirectRecorder()
+              opener = build_opener(recorder)
+              try:
+                  request = Request(url, headers={"User-Agent": user_agent, "Cache-Control": "no-cache"})
+                  with opener.open(request, timeout=30) as response:
+                      final_url = response.geturl()
+                      status = response.status
+                  secure_final = final_url.startswith(target)
+                  redirects_required = url.startswith("http://") or "www." in url
+                  redirect_observed = bool(recorder.chain)
+                  passed = status == 200 and secure_final and (redirect_observed if redirects_required else True)
+                  record(
+                      f"Przekierowanie {url}",
+                      passed,
+                      {"status": status, "final_url": final_url, "chain": recorder.chain},
+                  )
+              except (HTTPError, URLError, TimeoutError) as error:
+                  record(f"Przekierowanie {url}", False, str(error))
+
+          context = ssl.create_default_context()
+          for host in ("ze8es.run.place", "www.ze8es.run.place"):
+              try:
+                  with socket.create_connection((host, 443), timeout=20) as raw_socket:
+                      with context.wrap_socket(raw_socket, server_hostname=host) as tls_socket:
+                          certificate = tls_socket.getpeercert()
+                          expires_at = ssl.cert_time_to_seconds(certificate["notAfter"])
+                          remaining_days = int((expires_at - time.time()) // 86400)
+                          record(
+                              f"TLS {host}",
+                              remaining_days > 7,
+                              {
+                                  "protocol": tls_socket.version(),
+                                  "cipher": tls_socket.cipher()[0] if tls_socket.cipher() else None,
+                                  "not_after": certificate.get("notAfter"),
+                                  "remaining_days": remaining_days,
+                              },
+                          )
+              except (OSError, ssl.SSLError, KeyError) as error:
+                  record(f"TLS {host}", False, str(error))
+
+          console_errors: list[str] = []
+          page_errors: list[str] = []
+          failed_requests: list[str] = []
+          bad_responses: list[str] = []
+
+          try:
+              with sync_playwright() as playwright:
+                  browser = playwright.chromium.launch(headless=True)
+                  page = browser.new_page(viewport={"width": 1440, "height": 1000})
+                  page.on("console", lambda message: console_errors.append(message.text) if message.type == "error" else None)
+                  page.on("pageerror", lambda error: page_errors.append(str(error)))
+                  page.on(
+                      "requestfailed",
+                      lambda request: failed_requests.append(
+                          f"{request.method} {request.url}: {request.failure or 'nieznany błąd'}"
+                      ),
+                  )
+                  page.on(
+                      "response",
+                      lambda response: bad_responses.append(f"HTTP {response.status} {response.url}")
+                      if response.status >= 400
+                      else None,
+                  )
+                  response = page.goto(target, wait_until="networkidle", timeout=60_000)
+                  page.wait_for_timeout(1_500)
+                  final_url = page.url
+                  mixed_resources = page.locator(
+                      'script[src^="http://"], img[src^="http://"], link[href^="http://"], '
+                      'iframe[src^="http://"], source[src^="http://"]'
+                  ).count()
+                  horizontal_overflow = page.evaluate(
+                      "document.documentElement.scrollWidth > document.documentElement.clientWidth"
+                  )
+                  status = response.status if response else None
+                  record(
+                      "Chromium: załadowanie strony produkcyjnej",
+                      status == 200 and final_url.startswith(target),
+                      {"status": status, "final_url": final_url},
+                  )
+                  record("Chromium: błędy konsoli", not console_errors, console_errors)
+                  record("Chromium: wyjątki JavaScript", not page_errors, page_errors)
+                  record("Chromium: nieudane żądania", not failed_requests, failed_requests)
+                  record("Chromium: odpowiedzi HTTP >= 400", not bad_responses, bad_responses)
+                  record("Chromium: mieszane zasoby", mixed_resources == 0, {"count": mixed_resources})
+                  record("Chromium: poziome przewijanie 1440 px", not horizontal_overflow, horizontal_overflow)
+                  browser.close()
+          except Exception as error:
+              record("Chromium: uruchomienie testu", False, repr(error))
+
+          failures = [check for check in checks if not check["passed"]]
+          report = {
+              "site": target,
+              "checked_at_unix": int(time.time()),
+              "passed": not failures,
+              "checks": checks,
+          }
+          Path("production-domain-report.json").write_text(
+              json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+              encoding="utf-8",
+          )
+
+          summary = [
+              "# Weryfikacja domeny produkcyjnej ZE8ES",
+              "",
+              f"Adres docelowy: {target}",
+              "",
+              "| Kontrola | Wynik |",
+              "|---|---:|",
+          ]
+          for check in checks:
+              summary.append(f"| {check['name']} | {'✅' if check['passed'] else '❌'} |")
+          summary.extend(["", f"Łącznie: {len(checks) - len(failures)}/{len(checks)} kontroli zaliczonych."])
+          Path("production-domain-summary.md").write_text("\n".join(summary) + "\n", encoding="utf-8")
+
+          if failures:
+              print("Wykryto problemy w konfiguracji domeny produkcyjnej:")
+              for failure in failures:
+                  print(f"- {failure['name']}: {failure['details']}")
+              raise SystemExit(1)
+
+          print(f"OK: domena produkcyjna przeszła {len(checks)} kontroli.")
+          PY
+
+      - name: Check deployed site assets and public files
+        env:
+          ZE8ES_PUBLIC_URL: https://ze8es.run.place/
         run: python scripts/public_smoke_check.py
 
       - name: Add check summary
         if: always()
         run: |
+          if [ -f production-domain-summary.md ]; then
+            cat production-domain-summary.md >> "$GITHUB_STEP_SUMMARY"
+          fi
           if [ -f public-smoke-summary.md ]; then
             cat public-smoke-summary.md >> "$GITHUB_STEP_SUMMARY"
-          else
+          fi
+          if [ ! -f production-domain-summary.md ] && [ ! -f public-smoke-summary.md ]; then
             echo "Publiczny test nie utworzył podsumowania." >> "$GITHUB_STEP_SUMMARY"
           fi
 
@@ -51,6 +226,8 @@ jobs:
         with:
           name: ze8es-public-smoke-report
           path: |
+            production-domain-report.json
+            production-domain-summary.md
             public-smoke-report.json
             public-smoke-summary.md
           if-no-files-found: warn

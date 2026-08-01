@@ -6,5 +6,7 @@
   "publicEmail": "totalnybet@gmail.com",
   "serviceArea": "Cała Polska",
   "workModel": "zdalnie",
-  "contactMethod": "e-mail"
+  "contactMethod": "e-mail",
+  "analyticsEnabled": false,
+  "marketingCookiesEnabled": false
 }

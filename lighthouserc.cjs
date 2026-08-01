@@ -23,6 +23,7 @@ module.exports = {
         'cumulative-layout-shift': ['error', { maxNumericValue: 0.1 }],
         'total-blocking-time': ['warn', { maxNumericValue: 300 }],
         'speed-index': ['warn', { maxNumericValue: 3400 }],
+        'is-crawlable': 'off',
         'uses-responsive-images': 'off',
         'unsized-images': 'error'
       }

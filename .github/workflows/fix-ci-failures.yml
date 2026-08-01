@@ -25,6 +25,8 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
 
+          NL = chr(10)
+
           def replace_once(path: str, old: str, new: str, label: str) -> None:
               file = Path(path)
               source = file.read_text(encoding='utf-8')
@@ -44,9 +46,9 @@ jobs:
           replace_once(
               'scripts/visual_check.mjs',
               "hasFooter: Boolean(document.querySelector('footer')),
-".strip(),
+".replace(NL, ''),
               "hasFooter: Boolean(document.querySelector('.site-footer')),
-".strip(),
+".replace(NL, ''),
               'kontrola obecności stopki',
           )
           replace_once(
@@ -55,68 +57,83 @@ jobs:
               '<div class="hero-visual reveal" role="img" aria-label=',
               'rola grafiki hero',
           )
-          replace_once(
-              'assets/script.js',
-              "      slide.setAttribute('aria-hidden', String(!isCurrent));\n      slide.tabIndex = isCurrent ? 0 : -1;\n",
-              "      slide.setAttribute('aria-hidden', String(!isCurrent));\n      slide.toggleAttribute('inert', !isCurrent);\n      slide.tabIndex = isCurrent ? 0 : -1;\n",
-              'fokus nieaktywnych slajdów',
-          )
 
-          Path('lighthouserc.cjs').write_text("""module.exports = {
-  ci: {
-    collect: {
-      startServerCommand: 'python3 -u -m http.server 8080 --bind 127.0.0.1',
-      startServerReadyPattern: 'Serving HTTP',
-      url: ['http://127.0.0.1:8080/'],
-      numberOfRuns: 3,
-      settings: {
-        chromeFlags: '--headless --no-sandbox --disable-gpu',
-        emulatedFormFactor: 'mobile',
-        throttlingMethod: 'simulate'
-      }
-    },
-    assert: {
-      preset: 'lighthouse:recommended',
-      assertions: {
-        'categories:performance': ['error', { minScore: 0.9 }],
-        'categories:accessibility': ['error', { minScore: 0.95 }],
-        'categories:best-practices': ['error', { minScore: 0.95 }],
-        'categories:seo': ['warn', { minScore: 0.65 }],
-        'first-contentful-paint': ['warn', { maxNumericValue: 2200 }],
-        'largest-contentful-paint': ['warn', { maxNumericValue: 2800 }],
-        'cumulative-layout-shift': ['error', { maxNumericValue: 0.1 }],
-        'total-blocking-time': ['warn', { maxNumericValue: 300 }],
-        'speed-index': ['warn', { maxNumericValue: 3400 }],
-        'is-crawlable': 'off',
-        'uses-responsive-images': 'off',
-        'unsized-images': 'error',
-        'uses-text-compression': 'off',
-        'uses-long-cache-ttl': 'off',
-        'cache-insight': 'off',
-        'document-latency-insight': 'off',
-        'network-dependency-tree-insight': 'off',
-        'unminified-css': 'warn',
-        'render-blocking-insight': 'warn',
-        'render-blocking-resources': 'warn'
-      }
-    },
-    upload: {
-      target: 'filesystem',
-      outputDir: './lighthouse-reports'
-    }
-  }
-};
-""", encoding='utf-8')
+          old_slide = (
+              "      slide.setAttribute('aria-hidden', String(!isCurrent));" + NL
+              + "      slide.tabIndex = isCurrent ? 0 : -1;" + NL
+          )
+          new_slide = (
+              "      slide.setAttribute('aria-hidden', String(!isCurrent));" + NL
+              + "      slide.toggleAttribute('inert', !isCurrent);" + NL
+              + "      slide.tabIndex = isCurrent ? 0 : -1;" + NL
+          )
+          replace_once('assets/script.js', old_slide, new_slide, 'fokus nieaktywnych slajdów')
 
           quality = Path('scripts/quality_check.py')
           quality_source = quality.read_text(encoding='utf-8')
-          marker = "    if '#contact-form' in javascript or \"formEndpoint\" in javascript:\n        fail(\"JavaScript nadal zawiera nieużywaną obsługę formularza\")\n"
-          addition = marker + "    if \"toggleAttribute('inert'\" not in javascript:\n        fail(\"Karuzela nie usuwa nieaktywnych slajdów z kolejności fokusu\")\n    if 'class=\"hero-visual reveal\" role=\"img\"' not in source:\n        fail(\"Grafika hero nie ma prawidłowej roli dostępnościowej\")\n"
+          marker = (
+              "    if '#contact-form' in javascript or \"formEndpoint\" in javascript:" + NL
+              + "        fail(\"JavaScript nadal zawiera nieużywaną obsługę formularza\")" + NL
+          )
+          addition = (
+              marker
+              + "    if \"toggleAttribute('inert'\" not in javascript:" + NL
+              + "        fail(\"Karuzela nie usuwa nieaktywnych slajdów z kolejności fokusu\")" + NL
+              + "    if 'class=\"hero-visual reveal\" role=\"img\"' not in source:" + NL
+              + "        fail(\"Grafika hero nie ma prawidłowej roli dostępnościowej\")" + NL
+          )
           if addition not in quality_source:
               if quality_source.count(marker) != 1:
                   raise RuntimeError('Nie znaleziono miejsca aktualizacji kontroli jakości')
               quality.write_text(quality_source.replace(marker, addition, 1), encoding='utf-8')
           PY
+
+          cat > lighthouserc.cjs <<'EOF'
+          module.exports = {
+            ci: {
+              collect: {
+                startServerCommand: 'python3 -u -m http.server 8080 --bind 127.0.0.1',
+                startServerReadyPattern: 'Serving HTTP',
+                url: ['http://127.0.0.1:8080/'],
+                numberOfRuns: 3,
+                settings: {
+                  chromeFlags: '--headless --no-sandbox --disable-gpu',
+                  emulatedFormFactor: 'mobile',
+                  throttlingMethod: 'simulate'
+                }
+              },
+              assert: {
+                preset: 'lighthouse:recommended',
+                assertions: {
+                  'categories:performance': ['error', { minScore: 0.9 }],
+                  'categories:accessibility': ['error', { minScore: 0.95 }],
+                  'categories:best-practices': ['error', { minScore: 0.95 }],
+                  'categories:seo': ['warn', { minScore: 0.65 }],
+                  'first-contentful-paint': ['warn', { maxNumericValue: 2200 }],
+                  'largest-contentful-paint': ['warn', { maxNumericValue: 2800 }],
+                  'cumulative-layout-shift': ['error', { maxNumericValue: 0.1 }],
+                  'total-blocking-time': ['warn', { maxNumericValue: 300 }],
+                  'speed-index': ['warn', { maxNumericValue: 3400 }],
+                  'is-crawlable': 'off',
+                  'uses-responsive-images': 'off',
+                  'unsized-images': 'error',
+                  'uses-text-compression': 'off',
+                  'uses-long-cache-ttl': 'off',
+                  'cache-insight': 'off',
+                  'document-latency-insight': 'off',
+                  'network-dependency-tree-insight': 'off',
+                  'unminified-css': 'warn',
+                  'render-blocking-insight': 'warn',
+                  'render-blocking-resources': 'warn'
+                }
+              },
+              upload: {
+                target: 'filesystem',
+                outputDir: './lighthouse-reports'
+              }
+            }
+          };
+          EOF
 
       - name: Run static quality checks
         run: python3 scripts/quality_check.py

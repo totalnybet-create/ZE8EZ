@@ -227,6 +227,12 @@
   let formStartedAt = performance.now();
 
   const defaultFormConfig = Object.freeze({
+    brandName: 'ZE8ES',
+    brandType: 'marka',
+    publicEmail: 'totalnybet@gmail.com',
+    serviceArea: 'Cała Polska',
+    workModel: 'zdalnie',
+    contactMethod: 'e-mail',
     formEndpoint: '',
     requestTimeoutMs: 12000,
     minimumFillTimeMs: 1500,
@@ -243,6 +249,27 @@
     })
     .then((config) => ({ ...defaultFormConfig, ...config }))
     .catch(() => defaultFormConfig);
+
+  formConfigPromise.then((config) => {
+    const contactList = document.querySelector('.contact-list');
+    if (contactList && !contactList.querySelector('[data-business-detail]')) {
+      const area = document.createElement('span');
+      area.dataset.businessDetail = 'service-area';
+      const icon = document.createElement('i');
+      icon.setAttribute('aria-hidden', 'true');
+      icon.textContent = '✓';
+      area.append(icon, ` Obsługa: ${config.serviceArea}, ${config.workModel}`);
+      contactList.append(area);
+
+      const method = document.createElement('span');
+      method.dataset.businessDetail = 'contact-method';
+      const methodIcon = document.createElement('i');
+      methodIcon.setAttribute('aria-hidden', 'true');
+      methodIcon.textContent = '✓';
+      method.append(methodIcon, ` Kontakt obecnie przez ${config.contactMethod}`);
+      contactList.append(method);
+    }
+  });
 
   const setFormStatus = (message, type = 'info') => {
     if (!status) return;
@@ -289,7 +316,7 @@
     }
 
     if (!config.formEndpoint) {
-      setFormStatus('Formularz jest gotowy, ale oczekuje na zatwierdzony adres odbiorczy. Dane nie zostały wysłane.', 'info');
+      setFormStatus(`Formularz oczekuje na bezpieczny backend. Obecnie skontaktuj się przez e-mail: ${config.publicEmail}.`, 'info');
       return;
     }
     if (!isAllowedEndpoint(config.formEndpoint)) {

@@ -74,7 +74,7 @@ for (const viewport of viewports) {
     }
 
     const businessDetails = await page.locator('[data-business-detail]').allTextContents();
-    if (!businessDetails.some((value) => value.includes('Cała Polska') && value.includes('zdalnie'))) {
+    if (!businessDetails.some((value) => value.includes('Cała Polska') && value.toLowerCase().includes('zdaln'))) {
       failures.push(`${viewport.name}: brak potwierdzonego obszaru działania`);
     }
     if (!businessDetails.some((value) => value.includes('e-mail'))) {

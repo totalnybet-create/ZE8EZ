@@ -1,0 +1,61 @@
+name: Report production domain smoke result
+
+on:
+  workflow_run:
+    workflows: ["Public Pages smoke check"]
+    types: [completed]
+
+permissions:
+  actions: read
+  contents: read
+  issues: write
+
+concurrency:
+  group: public-pages-smoke-report
+  cancel-in-progress: true
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Download smoke-test report
+        uses: actions/download-artifact@v4
+        with:
+          name: ze8es-public-smoke-report
+          path: smoke-report
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: ${{ github.event.workflow_run.id }}
+
+      - name: Build issue comment
+        env:
+          SMOKE_CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+          SMOKE_RUN_URL: ${{ github.event.workflow_run.html_url }}
+          SMOKE_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          {
+            echo "## Publiczna weryfikacja domeny produkcyjnej"
+            echo
+            echo "Commit: \`${SMOKE_HEAD_SHA:0:12}\`"
+            echo
+            echo "Workflow: [Public Pages smoke check](${SMOKE_RUN_URL}) — **${SMOKE_CONCLUSION}**"
+            echo
+            if [ -f smoke-report/production-domain-summary.md ]; then
+              cat smoke-report/production-domain-summary.md
+            else
+              echo "Raport domeny produkcyjnej nie został utworzony."
+            fi
+            echo
+            if [ -f smoke-report/public-smoke-summary.md ]; then
+              cat smoke-report/public-smoke-summary.md
+            else
+              echo "Raport zasobów publicznych nie został utworzony."
+            fi
+          } > issue-comment.md
+
+      - name: Post result to issue 8
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh issue comment 8 --repo "$GITHUB_REPOSITORY" --body-file issue-comment.md

@@ -4,39 +4,44 @@ Aktualizacja: 2026-08-01
 
 ## Stan bieżący
 
-Pierwsza działająca wersja strony została wdrożona na gałęzi `main`.
+Drugi etap działającej wersji strony został wdrożony na gałęzi `main`.
 
 ### Wykonane
 
-- marka ZE8ES i podstawowy kierunek wizualny,
+- marka ZE8ES oraz własny znak SVG,
 - ciemny interfejs premium z akcentami fioletowo-niebieskimi,
-- responsywny nagłówek i menu mobilne,
-- sekcja hero z autorską wizualizacją laptopa i telefonu,
-- sekcja zaufania i przykładowych marek,
-- pięć kart usług,
-- liczby i animowane liczniki,
-- pierwsza karta portfolio,
+- kod rozdzielony na semantyczny HTML, osobny CSS i osobny JavaScript,
+- responsywny nagłówek oraz dostępne menu mobilne,
+- rozbudowana sekcja hero z autorską wizualizacją laptopa i telefonu,
+- sekcja usług z pięcioma obszarami oferty,
+- animowane wskaźniki standardów realizacji,
+- działająca i dostępna karuzela trzech projektów demonstracyjnych,
 - czterostopniowy proces współpracy,
-- końcowa sekcja kontaktowa i stopka,
+- rozbudowana sekcja O nas,
+- sekcja standardu współpracy zamiast niepotwierdzonych opinii klientów,
+- dostępne akordeony FAQ,
+- formularz kontaktowy z walidacją po stronie przeglądarki,
+- stopka i kompletna nawigacja wewnętrzna,
 - podstawowe SEO i metadane Open Graph,
-- strona błędu 404,
-- robots.txt i sitemap.xml,
-- skrypt kontroli jakości bez zewnętrznych zależności,
-- workflow GitHub Actions uruchamiany po zmianach na `main`,
+- favicon SVG, strona błędu 404, robots.txt i sitemap.xml,
+- rozszerzony skrypt kontroli jakości bez zewnętrznych zależności,
+- workflow GitHub Actions dla kontroli jakości,
+- workflow wdrożenia statycznej strony do GitHub Pages,
 - dokumentacja i plan pełnego wdrożenia.
 
 ## Następny etap
 
-1. Porównanie pierwszego ekranu z referencją na szerokościach 1440, 1024, 768, 390 i 320 px.
-2. Dopracowanie proporcji hero, typografii, poświat i makiet urządzeń.
-3. Rozdzielenie warstw na osobne pliki CSS i JavaScript po ustabilizowaniu design systemu.
-4. Rozbudowanie portfolio do działającej karuzeli wielu projektów.
-5. Dodanie sekcji O nas, opinii, FAQ i kompletnego formularza.
-6. Podpięcie prawdziwych danych firmy, adresu e-mail i domeny.
-7. Testy dostępności, wydajności i publikacja wersji demonstracyjnej.
+1. Sprawdzić wynik workflow GitHub Pages i w razie potrzeby włączyć Pages w ustawieniach repozytorium.
+2. Porównać pierwszy ekran z referencją na szerokościach 1440, 1024, 768, 390 i 320 px.
+3. Dopracować proporcje hero, typografię, poświaty i makiety urządzeń na podstawie zrzutów z wersji demonstracyjnej.
+4. Dodać prawdziwe realizacje wraz z obrazami i opisami.
+5. Podpiąć bezpieczny endpoint formularza oraz ochronę antyspamową.
+6. Uzupełnić prawdziwe dane firmy, adres e-mail, telefon i domenę.
+7. Przeprowadzić końcowe testy dostępności, wydajności, linków i SEO.
 
 ## Ważne
 
 - Repozytorium nazywa się `ZE8EZ`.
 - Marka widoczna na stronie zgodnie z poleceniem nazywa się `ZE8ES`.
-- Obecne dane klientów, wyniki i adres e-mail są treściami demonstracyjnymi i muszą zostać zatwierdzone przed publikacją produkcyjną.
+- Projekty w portfolio i treści dotyczące standardu współpracy są obecnie demonstracyjne.
+- Formularz waliduje dane, ale nie wysyła ich jeszcze poza przeglądarkę.

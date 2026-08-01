@@ -1,0 +1,154 @@
+name: Audit production workflows
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/ci-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+  issues: write
+
+concurrency:
+  group: production-workflow-audit
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+
+    steps:
+      - name: Wait for production workflows and report to issue 8
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          TARGET_SHA: ${{ github.sha }}
+          ISSUE_NUMBER: '8'
+        run: |
+          python3 - <<'PY'
+          from __future__ import annotations
+
+          from datetime import datetime, timedelta, timezone
+          from urllib.error import HTTPError
+          from urllib.request import Request, urlopen
+          import json
+          import os
+          import time
+
+          token = os.environ['GH_TOKEN']
+          repository = os.environ['REPOSITORY']
+          target_sha = os.environ['TARGET_SHA']
+          issue_number = os.environ['ISSUE_NUMBER']
+          api_base = 'https://api.github.com'
+          started_at = datetime.now(timezone.utc)
+
+          expected = [
+              'Quality checks',
+              'Visual regression checks',
+              'Lighthouse audit',
+              'Deploy ZE8ES to GitHub Pages',
+              'Public Pages smoke check',
+          ]
+
+          def api(path: str, method: str = 'GET', payload: dict | None = None):
+              data = None if payload is None else json.dumps(payload).encode('utf-8')
+              request = Request(
+                  api_base + path,
+                  data=data,
+                  method=method,
+                  headers={
+                      'Accept': 'application/vnd.github+json',
+                      'Authorization': f'Bearer {token}',
+                      'X-GitHub-Api-Version': '2022-11-28',
+                      'User-Agent': 'ZE8ES-production-workflow-audit',
+                      'Content-Type': 'application/json',
+                  },
+              )
+              try:
+                  with urlopen(request, timeout=30) as response:
+                      return json.load(response)
+              except HTTPError as error:
+                  body = error.read().decode('utf-8', errors='replace')
+                  raise RuntimeError(f'GitHub API HTTP {error.code}: {body}') from error
+
+          def parse_time(value: str | None) -> datetime | None:
+              if not value:
+                  return None
+              return datetime.fromisoformat(value.replace('Z', '+00:00'))
+
+          selected: dict[str, dict] = {}
+          for attempt in range(40):
+              payload = api(f'/repos/{repository}/actions/runs?branch=main&per_page=100')
+              runs = payload.get('workflow_runs', [])
+
+              for name in expected:
+                  candidates = [run for run in runs if run.get('name') == name]
+                  exact = [run for run in candidates if run.get('head_sha') == target_sha]
+
+                  if name == 'Public Pages smoke check' and not exact:
+                      threshold = started_at - timedelta(minutes=2)
+                      exact = [
+                          run for run in candidates
+                          if run.get('event') == 'workflow_run'
+                          and (parse_time(run.get('created_at')) or datetime.min.replace(tzinfo=timezone.utc)) >= threshold
+                      ]
+
+                  if exact:
+                      exact.sort(key=lambda run: run.get('created_at') or '', reverse=True)
+                      selected[name] = exact[0]
+
+              complete = len(selected) == len(expected) and all(
+                  selected[name].get('status') == 'completed' for name in expected
+              )
+              if complete:
+                  break
+
+              print(f'Próba {attempt + 1}/40: znaleziono {len(selected)}/{len(expected)} workflow.')
+              time.sleep(15)
+
+          rows = []
+          failures = []
+          for name in expected:
+              run = selected.get(name)
+              if not run:
+                  rows.append(f'| {name} | ❌ brak wyniku | — |')
+                  failures.append(f'{name}: brak wyniku po upływie limitu czasu')
+                  continue
+
+              status = run.get('status') or 'unknown'
+              conclusion = run.get('conclusion') or status
+              passed = status == 'completed' and conclusion in {'success', 'neutral', 'skipped'}
+              marker = '✅' if passed else '❌'
+              url = run.get('html_url') or '#'
+              run_number = run.get('run_number') or '—'
+              rows.append(f'| {name} | {marker} [{conclusion}]({url}) | #{run_number} |')
+              if not passed:
+                  failures.append(f'{name}: {conclusion}')
+
+          short_sha = target_sha[:12]
+          body = '\n'.join([
+              '## Automatyczny audyt workflow',
+              '',
+              f'Commit: `{short_sha}`',
+              '',
+              '| Workflow | Wynik | Run |',
+              '|---|---|---:|',
+              *rows,
+              '',
+              ('**Wynik końcowy: wszystkie kontrole zaliczone.**' if not failures else '**Wynik końcowy: wymagane są poprawki.**'),
+          ])
+
+          api(
+              f'/repos/{repository}/issues/{issue_number}/comments',
+              method='POST',
+              payload={'body': body},
+          )
+
+          print(body)
+          if failures:
+              raise SystemExit('\n'.join(failures))
+          PY

@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="20" y1="510" x2="850" y2="20" gradientUnits="userSpaceOnUse"><stop stop-color="#2B163B"/><stop offset=".48" stop-color="#4A2346"/><stop offset="1" stop-color="#8A3B57"/></linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FF8A5B"/><stop offset=".5" stop-color="#F05AB5"/><stop offset="1" stop-color="#7B50FF"/></linearGradient>
+    <filter id="s" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="22" stdDeviation="22" flood-color="#09020B" flood-opacity=".58"/></filter>
+  </defs>
+  <rect width="900" height="520" rx="28" fill="url(#bg)"/>
+  <circle cx="730" cy="115" r="205" fill="#F05AB5" fill-opacity=".12"/>
+  <path d="M-25 426C188 556 509 496 905 114" stroke="#FF7F8F" stroke-opacity=".26" stroke-width="3"/>
+  <g filter="url(#s)" transform="rotate(-4 575 286)">
+    <rect x="240" y="67" width="582" height="394" rx="26" fill="#15101B" stroke="#FFFFFF" stroke-opacity=".2"/>
+    <rect x="261" y="87" width="540" height="354" rx="17" fill="#0E0B12"/>
+    <rect x="261" y="87" width="540" height="50" rx="17" fill="#17111D"/>
+    <circle cx="287" cy="112" r="7" fill="#FF7A69"/>
+    <text x="304" y="117" fill="white" font-family="Arial" font-size="14" font-weight="700">NORTH</text>
+    <text x="588" y="117" fill="#928493" font-family="Arial" font-size="9">NOWOŚCI</text>
+    <text x="648" y="117" fill="#928493" font-family="Arial" font-size="9">KOLEKCJE</text>
+    <text x="716" y="117" fill="#928493" font-family="Arial" font-size="9">KOSZYK</text>
+
+    <rect x="279" y="153" width="504" height="144" rx="16" fill="url(#accent)" fill-opacity=".85"/>
+    <circle cx="713" cy="224" r="94" fill="white" fill-opacity=".08"/>
+    <text x="307" y="191" fill="white" fill-opacity=".75" font-family="Arial" font-size="9">NOWA KOLEKCJA</text>
+    <text x="307" y="226" fill="white" font-family="Arial" font-size="30" font-weight="700">Minimalizm, który</text>
+    <text x="307" y="260" fill="white" font-family="Arial" font-size="30" font-weight="700">pasuje do Ciebie.</text>
+    <rect x="635" y="180" width="108" height="82" rx="41" fill="#1B1420" fill-opacity=".75"/>
+    <path d="M674 211C684 194 707 194 718 211L731 235C735 243 729 252 720 252H672C663 252 657 243 661 235L674 211Z" fill="#F7E9EB"/>
+    <path d="M682 208C682 198 689 191 696 191C704 191 711 198 711 208" stroke="#F7E9EB" stroke-width="5" stroke-linecap="round"/>
+
+    <text x="279" y="327" fill="white" font-family="Arial" font-size="13" font-weight="700">Bestsellery</text>
+    <text x="725" y="327" fill="#A493A5" font-family="Arial" font-size="8">ZOBACZ WSZYSTKIE →</text>
+    <rect x="279" y="344" width="153" height="79" rx="12" fill="#19131E" stroke="#FFFFFF" stroke-opacity=".07"/>
+    <rect x="292" y="356" width="54" height="54" rx="10" fill="#6B384A"/>
+    <path d="M305 384L316 370L330 384L339 373V407H300V392Z" fill="#F2C1C8"/>
+    <text x="359" y="370" fill="white" font-family="Arial" font-size="9" font-weight="700">Bluza North</text>
+    <text x="359" y="387" fill="#938596" font-family="Arial" font-size="8">289 zł</text>
+    <rect x="359" y="397" width="55" height="15" rx="7" fill="#FF7A69" fill-opacity=".18"/>
+
+    <rect x="445" y="344" width="153" height="79" rx="12" fill="#19131E" stroke="#FFFFFF" stroke-opacity=".07"/>
+    <rect x="458" y="356" width="54" height="54" rx="10" fill="#483058"/>
+    <circle cx="485" cy="383" r="18" fill="#D7C0E8"/>
+    <text x="525" y="370" fill="white" font-family="Arial" font-size="9" font-weight="700">Czapka Soft</text>
+    <text x="525" y="387" fill="#938596" font-family="Arial" font-size="8">129 zł</text>
+    <rect x="525" y="397" width="55" height="15" rx="7" fill="#7B50FF" fill-opacity=".18"/>
+
+    <rect x="611" y="344" width="172" height="79" rx="12" fill="#19131E" stroke="#FFFFFF" stroke-opacity=".07"/>
+    <rect x="624" y="356" width="54" height="54" rx="10" fill="#624031"/>
+    <path d="M638 400L648 369H665L675 400Z" fill="#E8C9B7"/>
+    <text x="691" y="370" fill="white" font-family="Arial" font-size="9" font-weight="700">Torba Canvas</text>
+    <text x="691" y="387" fill="#938596" font-family="Arial" font-size="8">199 zł</text>
+    <rect x="691" y="397" width="55" height="15" rx="7" fill="#FF8A5B" fill-opacity=".18"/>
+  </g>
+
+  <g filter="url(#s)" transform="rotate(6 213 340)">
+    <rect x="112" y="191" width="202" height="286" rx="30" fill="#120E17" stroke="#FFFFFF" stroke-opacity=".25"/>
+    <rect x="126" y="208" width="174" height="251" rx="22" fill="#19131F"/>
+    <rect x="181" y="216" width="65" height="15" rx="8" fill="#08060A"/>
+    <text x="145" y="259" fill="white" font-family="Arial" font-size="16" font-weight="700">Twój koszyk</text>
+    <rect x="143" y="280" width="140" height="64" rx="13" fill="#241A2A"/>
+    <rect x="154" y="291" width="42" height="42" rx="9" fill="#6B384A"/>
+    <path d="M164 319L173 297L187 319Z" fill="#F2C1C8"/>
+    <text x="207" y="303" fill="white" font-family="Arial" font-size="9" font-weight="700">Bluza North</text>
+    <text x="207" y="320" fill="#A491A6" font-family="Arial" font-size="8">289 zł</text>
+    <circle cx="269" cy="312" r="8" fill="#FF7A69" fill-opacity=".25"/>
+    <path d="M266 312H272" stroke="#FF9B90" stroke-width="2"/>
+    <rect x="143" y="356" width="140" height="36" rx="11" fill="#241A2A"/>
+    <text x="154" y="378" fill="#A491A6" font-family="Arial" font-size="8">Dostawa</text>
+    <text x="247" y="378" fill="white" font-family="Arial" font-size="8">0 zł</text>
+    <rect x="143" y="404" width="140" height="37" rx="11" fill="url(#accent)"/>
+    <text x="180" y="427" fill="white" font-family="Arial" font-size="10" font-weight="700">KUPUJĘ →</text>
+  </g>
+</svg>

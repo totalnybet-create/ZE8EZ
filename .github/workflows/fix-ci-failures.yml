@@ -44,14 +44,6 @@ jobs:
               'selektor przewijania do stopki',
           )
           replace_once(
-              'scripts/visual_check.mjs',
-              "hasFooter: Boolean(document.querySelector('footer')),
-".replace(NL, ''),
-              "hasFooter: Boolean(document.querySelector('.site-footer')),
-".replace(NL, ''),
-              'kontrola obecności stopki',
-          )
-          replace_once(
               'index.html',
               '<div class="hero-visual reveal" aria-label=',
               '<div class="hero-visual reveal" role="img" aria-label=',

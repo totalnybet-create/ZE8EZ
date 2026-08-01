@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://totalnybet-create.github.io/ZE8EZ/sitemap.xml

@@ -6,8 +6,9 @@ Nowoczesna, responsywna strona internetowa dla studia tworzącego strony, aplika
 - Nazwa marki na stronie: **ZE8ES**
 - Główna gałąź: `main`
 - Technologia produkcyjna: statyczny HTML, CSS i JavaScript
-- Stan publikacji: workflow GitHub Pages jest gotowy, ale publiczny adres nie został jeszcze potwierdzony
-- Stan indeksowania: zablokowane do czasu potwierdzenia domeny i finalnych treści
+- Publiczna wersja demonstracyjna: https://totalnybet-create.github.io/ZE8EZ/
+- Stan publikacji: GitHub Pages działa przez workflow `Deploy ZE8ES to GitHub Pages`
+- Stan indeksowania: zablokowane do czasu zatwierdzenia danych firmy, realizacji i dokumentów prawnych
 
 ## Cel projektu
 
@@ -23,7 +24,7 @@ Zbudowanie od podstaw kompletnej strony firmowej inspirowanej przekazanym kierun
 - formularz z walidacją, zgodą, honeypotem i konfigurowalnym endpointem HTTPS,
 - robocza polityka prywatności oznaczona `noindex,nofollow`,
 - automatyczne testy statyczne, Lighthouse i testy Playwright na pięciu szerokościach,
-- bezpieczny skrypt konfigurujący canonical, Open Graph, robots i sitemapę po potwierdzeniu domeny.
+- bezpieczny skrypt konfigurujący canonical, Open Graph, robots i sitemapę po zatwierdzeniu wydania produkcyjnego.
 
 ## Struktura
 
@@ -110,17 +111,17 @@ Publiczna konfiguracja znajduje się w `assets/site-config.json`. Pole `formEndp
 
 Nie wolno zapisywać kluczy API, haseł ani tokenów w pliku konfiguracyjnym, kodzie frontendu lub treści Issue.
 
-## Konfiguracja adresu produkcyjnego
+## Konfiguracja wydania produkcyjnego
 
-Po potwierdzeniu domeny albo adresu GitHub Pages:
+Publiczny adres demonstracyjny jest potwierdzony, ale indeksowanie pozostaje wyłączone do czasu zatwierdzenia treści i dokumentów. Gdy projekt będzie gotowy produkcyjnie:
 
 ```bash
-python scripts/configure_release.py https://example.com/ --dry-run
-python scripts/configure_release.py https://example.com/
+python scripts/configure_release.py https://totalnybet-create.github.io/ZE8EZ/ --dry-run
+python scripts/configure_release.py https://totalnybet-create.github.io/ZE8EZ/
 python scripts/release_check.py
 ```
 
-Skrypt ustawia spójne `canonical`, `og:url`, `robots.txt` i `sitemap.xml`. Nie należy uruchamiać go z adresem, którego działanie nie zostało potwierdzone.
+Skrypt ustawia spójne `canonical`, `og:url`, `robots.txt` i `sitemap.xml`.
 
 ## Status funkcjonalny
 
@@ -132,13 +133,14 @@ Skrypt ustawia spójne `canonical`, `og:url`, `robots.txt` i `sitemap.xml`. Nie 
 - [x] Robocza polityka prywatności i checklisty prawne
 - [x] Automatyczne testy statyczne, wizualne i Lighthouse
 - [x] Workflow publikacji z bramką jakości
-- [ ] Ręczne ustawienie `Settings → Pages → Source: GitHub Actions`
-- [ ] Potwierdzenie publicznego adresu HTTPS
+- [x] GitHub Pages ustawione na `GitHub Actions`
+- [x] Potwierdzony publiczny adres HTTPS
+- [x] Pierwszy test na fizycznym telefonie i korekta mobilna
 - [ ] Uzupełnienie prawdziwych danych firmy
 - [ ] Podłączenie zatwierdzonego backendu formularza
 - [ ] Zastąpienie koncepcji prawdziwymi realizacjami
 - [ ] Finalizacja dokumentów prawnych
-- [ ] Testy na fizycznych urządzeniach
+- [ ] Pełne testy na wymaganych urządzeniach i przeglądarkach
 - [ ] Podłączenie domeny, Search Console i ewentualnej analityki
 
 Szczegółowy stan znajduje się w `docs/STATUS.md`.

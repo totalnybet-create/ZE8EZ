@@ -190,24 +190,28 @@
     </section>
 
     <section class="section" id="kontakt" aria-labelledby="contact-title">
-      <div class="container contact-card"><div class="contact-grid">
-        <div class="contact-copy reveal"><p class="kicker">Zacznijmy współpracę</p><h2 id="contact-title">Masz pomysł?<br><span class="gradient-text">Zamieńmy go w projekt.</span></h2><p>Napisz bezpośrednio na <a class="gradient-text" href="mailto:totalnybet@gmail.com">totalnybet@gmail.com</a> albo opisz krótko, czego potrzebujesz. Formularz jest przygotowany i walidowany w przeglądarce; bezpieczną wysyłkę podłączymy po zatwierdzeniu backendu odbiorczego.</p><div class="contact-list"><span><i aria-hidden="true">✓</i> Bezpłatna rozmowa wstępna</span><span><i aria-hidden="true">✓</i> Jasny zakres i kolejność prac</span><span><i aria-hidden="true">✓</i> Wszystkie zmiany zapisane na GitHubie</span></div></div>
-
-        <form id="contact-form" class="reveal" method="post" novalidate aria-describedby="form-note">
-          <div class="field-honeypot" aria-hidden="true"><label for="website">Pozostaw to pole puste</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div>
-          <div class="form-grid">
-            <div class="field"><label for="name">Imię lub firma *</label><input id="name" name="name" autocomplete="name" required placeholder="Jan Kowalski"></div>
-            <div class="field"><label for="email">Adres e-mail *</label><input id="email" name="email" type="email" autocomplete="email" required placeholder="kontakt@firma.pl"></div>
-            <div class="field"><label for="project">Rodzaj projektu *</label><select id="project" name="project" required><option value="">Wybierz</option><option>Strona internetowa</option><option>Sklep internetowy</option><option>Aplikacja mobilna</option><option>System lub automatyzacja</option><option>Rozwiązanie AI</option></select></div>
-            <div class="field"><label for="budget">Orientacyjny budżet</label><select id="budget" name="budget"><option>Do ustalenia</option><option>3 000–8 000 zł</option><option>8 000–20 000 zł</option><option>20 000 zł i więcej</option></select></div>
-            <div class="field full"><label for="message">Krótki opis projektu *</label><textarea id="message" name="message" minlength="20" required placeholder="Napisz, co ma robić strona lub aplikacja i do kogo jest kierowana."></textarea></div>
-            <div class="field full"><label class="consent-row" for="privacy"><input id="privacy" name="privacy" type="checkbox" required><span>Akceptuję kontakt w sprawie zapytania i zapoznałem się z <a href="privacy.html">roboczą polityką prywatności</a>. *</span></label></div>
-            <div class="field full"><button class="btn btn-primary" type="submit">Wyślij zapytanie →</button></div>
+      <div class="container contact-card">
+        <div class="contact-grid">
+          <div class="contact-copy reveal">
+            <p class="kicker">Zacznijmy współpracę</p>
+            <h2 id="contact-title">Masz pomysł?<br><span class="gradient-text">Napisz do ZE8ES.</span></h2>
+            <p>Obsługujemy klientów z całej Polski i pracujemy zdalnie. Obecnie przyjmujemy zapytania wyłącznie przez e-mail.</p>
+            <div class="contact-list">
+              <span data-business-detail><i aria-hidden="true">✓</i> Cała Polska — współpraca zdalna</span>
+              <span data-business-detail><i aria-hidden="true">✓</i> Kontakt wyłącznie przez e-mail</span>
+              <span><i aria-hidden="true">✓</i> Jasny zakres i kolejność prac</span>
+            </div>
           </div>
-          <p class="form-note" id="form-note">Endpoint odbiorczy nie jest jeszcze skonfigurowany. Do tego czasu formularz nie wysyła danych poza przeglądarkę; dostępny jest bezpośredni kontakt: <a href="mailto:totalnybet@gmail.com">totalnybet@gmail.com</a>.</p>
-          <p class="form-status" role="status" aria-live="polite"></p>
-        </form>
-      </div></div>
+
+          <aside class="contact-direct reveal" aria-label="Bezpośredni kontakt e-mail">
+            <p class="kicker">Kontakt e-mail</p>
+            <a class="contact-email" href="mailto:totalnybet@gmail.com">totalnybet@gmail.com</a>
+            <p>W wiadomości opisz cel projektu, potrzebne funkcje i orientacyjny termin. Odpowiedź otrzymasz drogą e-mailową.</p>
+            <a class="btn btn-primary" href="mailto:totalnybet@gmail.com?subject=Zapytanie%20o%20projekt%20ZE8ES">Napisz e-mail <span aria-hidden="true">→</span></a>
+            <small>ZE8ES nie publikuje obecnie numeru telefonu ani formularza kontaktowego.</small>
+          </aside>
+        </div>
+      </div>
     </section>
   </main>
 

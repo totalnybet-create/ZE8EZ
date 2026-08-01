@@ -23,15 +23,11 @@ for (const viewport of viewports) {
   });
   const page = await context.newPage();
   const browserErrors = [];
-  const postRequests = [];
 
   page.on('console', (message) => {
     if (message.type() === 'error') browserErrors.push(`console: ${message.text()}`);
   });
   page.on('pageerror', (error) => browserErrors.push(`pageerror: ${error.message}`));
-  page.on('request', (request) => {
-    if (request.method() === 'POST') postRequests.push(request.url());
-  });
   page.on('requestfailed', (request) => {
     browserErrors.push(`requestfailed: ${request.url()} (${request.failure()?.errorText || 'unknown'})`);
   });
@@ -92,27 +88,16 @@ for (const viewport of viewports) {
     });
 
     if (viewport.name === 'mobile-390') {
-      const form = page.locator('#contact-form');
-      if (await form.count()) {
-        const initiallyValid = await form.evaluate((element) => element.checkValidity());
-        if (initiallyValid) failures.push('mobile-390: pusty formularz został uznany za poprawny');
-
-        await page.locator('#name').fill('Test ZE8ES');
-        await page.locator('#email').fill('test@example.com');
-        await page.locator('#project').selectOption({ label: 'Strona internetowa' });
-        await page.locator('#message').fill('To jest automatyczna wiadomość testowa sprawdzająca formularz ZE8ES.');
-        await page.locator('#privacy').check();
-        await page.waitForTimeout(1600);
-        await form.locator('button[type="submit"]').click();
-
-        const formStatus = await page.locator('.form-status').textContent();
-        if (!formStatus?.includes('Obecnie skontaktuj się przez e-mail')) {
-          failures.push(`mobile-390: nieprawidłowy komunikat trybu bez endpointu: ${formStatus || 'brak'}`);
-        }
-        if (!formStatus?.includes('totalnybet@gmail.com')) {
-          failures.push('mobile-390: komunikat formularza nie zawiera publicznego e-maila');
-        }
-        if (postRequests.length) failures.push(`mobile-390: formularz wykonał nieoczekiwane POST: ${postRequests.join(', ')}`);
+      if (await page.locator('#contact-form').count()) {
+        failures.push('mobile-390: strona nadal zawiera nieaktywny formularz kontaktowy');
+      }
+      const emailLinks = page.locator('a[href^="mailto:totalnybet@gmail.com"]');
+      if ((await emailLinks.count()) < 2) {
+        failures.push('mobile-390: brak bezpośrednich linków do publicznego e-maila');
+      }
+      const emailCard = page.locator('.contact-direct');
+      if (!(await emailCard.isVisible())) {
+        failures.push('mobile-390: karta kontaktu e-mail nie jest widoczna');
       }
 
       const privacyResponse = await page.goto(`${normalizedBaseUrl}/privacy.html`, { waitUntil: 'networkidle' });
@@ -148,4 +133,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`OK: zapisano ${viewports.length} zrzutów strony, zrzut polityki prywatności i zweryfikowano potwierdzone dane kontaktowe.`);
+console.log(`OK: zapisano ${viewports.length} zrzutów strony, zrzut polityki prywatności i zweryfikowano kontakt wyłącznie e-mailowy.`);

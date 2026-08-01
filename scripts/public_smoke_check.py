@@ -80,6 +80,7 @@ def main() -> None:
     parsed_site = urlparse(SITE_URL)
     if parsed_site.scheme != "https" or not parsed_site.netloc:
         raise SystemExit("ZE8ES_PUBLIC_URL musi być poprawnym adresem HTTPS")
+    public_root = parsed_site.path if parsed_site.path.endswith("/") else f"{parsed_site.path}/"
 
     results: list[CheckResult] = []
 
@@ -123,6 +124,7 @@ def main() -> None:
         ("Podstawowy CSS", "assets/styles.css", "text/css"),
         ("Warstwa wizualna CSS", "assets/visual-upgrades.css", "text/css"),
         ("Poprawki responsywne CSS", "assets/responsive-fixes.css", "text/css"),
+        ("Strona 404 CSS", "assets/error-page.css", "text/css"),
         ("JavaScript", "assets/script.js", "javascript"),
         ("Logo SVG", "assets/logo-mark.svg", "image/svg+xml"),
         ("Hero SVG", "assets/hero-visual.svg", "image/svg+xml"),
@@ -140,9 +142,16 @@ def main() -> None:
 
     missing_path = f"__smoke-missing-{int(time.time())}.html"
     not_found_result, not_found_body, _ = check_url("Własna strona 404", missing_path, 404)
-    if not_found_result.passed and b"ZE8ES" not in not_found_body:
+    not_found_html = not_found_body.decode("utf-8", errors="replace")
+    if not_found_result.passed and "ZE8ES" not in not_found_html:
         not_found_result.passed = False
         not_found_result.details = "Odpowiedź 404 nie zawiera marki ZE8ES"
+    if not_found_result.passed and f'href="{public_root}assets/error-page.css"' not in not_found_html:
+        not_found_result.passed = False
+        not_found_result.details = "Strona 404 nie ładuje arkusza z poprawnej ścieżki projektu"
+    if not_found_result.passed and f'href="{public_root}"' not in not_found_html:
+        not_found_result.passed = False
+        not_found_result.details = "Strona 404 nie prowadzi do katalogu głównego projektu"
     results.append(not_found_result)
 
     failures = [result for result in results if not result.passed]

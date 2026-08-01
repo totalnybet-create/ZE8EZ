@@ -12,7 +12,9 @@
   <meta property="og:description" content="Cyfrowe rozwiązania, które pomagają rozwijać biznes.">
   <title>ZE8ES — strony, aplikacje i systemy dla firm</title>
   <link rel="icon" href="assets/logo-mark.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/hero-visual.svg" as="image" type="image/svg+xml" fetchpriority="high">
   <link rel="stylesheet" href="assets/styles.css">
+  <link rel="stylesheet" href="assets/visual-upgrades.css">
   <script src="assets/script.js" defer></script>
 </head>
 <body>
@@ -80,7 +82,6 @@
           <div class="orbit" aria-hidden="true"></div>
           <div class="orbit orbit-small" aria-hidden="true"></div>
           <div class="code-badge" aria-hidden="true">&lt;/&gt;</div>
-
           <div class="laptop" aria-hidden="true">
             <div class="laptop-screen">
               <div class="dashboard-top">
@@ -98,7 +99,6 @@
             </div>
             <div class="laptop-base"></div>
           </div>
-
           <div class="phone" aria-hidden="true">
             <div class="phone-notch"></div>
             <p class="phone-welcome">Witaj, Michale</p>
@@ -111,7 +111,6 @@
             <div class="phone-row"><i></i><span></span><b>›</b></div>
             <div class="phone-row"><i></i><span></span><b>›</b></div>
           </div>
-
           <div class="floating-panel" aria-hidden="true"><i></i><i></i><i></i></div>
         </div>
       </div>
@@ -168,7 +167,6 @@
           <p class="kicker">Dlaczego my</p>
           <h2 id="results-title">Technologia, która ma <span class="gradient-text">konkretny cel.</span></h2>
           <p>Nie dokładamy funkcji bez potrzeby. Najpierw ustalamy, co ma osiągnąć projekt, a następnie budujemy możliwie prostą i skuteczną drogę do wyniku.</p>
-
           <div class="metrics" aria-label="Standardy realizacji">
             <div class="metric"><i aria-hidden="true">↗</i><strong><span data-counter="100" data-suffix="%">0%</span></strong><small>Responsywne wdrożenie</small></div>
             <div class="metric"><i aria-hidden="true">◉</i><strong><span data-counter="90" data-suffix="+">0+</span></strong><small>Docelowy Lighthouse</small></div>
@@ -190,9 +188,9 @@
             </div>
           </div>
 
-          <div class="carousel" aria-roledescription="karuzela" aria-label="Projekty demonstracyjne">
+          <div class="carousel" tabindex="0" aria-roledescription="karuzela" aria-label="Projekty demonstracyjne — użyj strzałek lewo i prawo">
             <div class="carousel-track">
-              <article class="project-card" tabindex="-1">
+              <article class="project-card" tabindex="-1" aria-label="Legnicki Rynek — koncepcja portalu lokalnego">
                 <div class="project-copy">
                   <small>Portal lokalny</small>
                   <h3>Legnicki Rynek</h3>
@@ -200,7 +198,7 @@
                   <a href="#kontakt">Zobacz zakres</a>
                 </div>
               </article>
-              <article class="project-card" tabindex="-1">
+              <article class="project-card" tabindex="-1" aria-label="Service Flow — koncepcja panelu usługowego">
                 <div class="project-copy">
                   <small>Panel usługowy</small>
                   <h3>Service Flow</h3>
@@ -208,7 +206,7 @@
                   <a href="#kontakt">Zobacz zakres</a>
                 </div>
               </article>
-              <article class="project-card" tabindex="-1">
+              <article class="project-card" tabindex="-1" aria-label="North Store — koncepcja sklepu internetowego">
                 <div class="project-copy">
                   <small>E-commerce</small>
                   <h3>North Store</h3>
@@ -258,12 +256,12 @@
       </div>
     </section>
 
-    <section class="section" aria-labelledby="testimonials-title">
+    <section class="section" aria-labelledby="standard-title">
       <div class="container">
         <div class="section-heading reveal">
           <div>
             <p class="kicker">Standard współpracy</p>
-            <h2 id="testimonials-title">Czego możesz oczekiwać.</h2>
+            <h2 id="standard-title">Czego możesz oczekiwać.</h2>
           </div>
           <p>Poniższe karty opisują docelowy standard obsługi projektu. Nie są publikowanymi opiniami klientów.</p>
         </div>
@@ -293,7 +291,6 @@
           </div>
           <p>Podstawowe informacje o sposobie realizacji strony, aplikacji lub systemu.</p>
         </div>
-
         <div class="faq-list reveal">
           <div class="faq-item">
             <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-1"><span>Ile trwa wykonanie strony?</span><i aria-hidden="true">+</i></button>
@@ -321,7 +318,7 @@
           <div class="contact-copy reveal">
             <p class="kicker">Zacznijmy współpracę</p>
             <h2 id="contact-title">Masz pomysł?<br><span class="gradient-text">Zamieńmy go w projekt.</span></h2>
-            <p>Opisz krótko, czego potrzebujesz. Formularz jest już przygotowany i walidowany w przeglądarce. Bezpieczną wysyłkę wiadomości podłączymy po wyborze hostingu.</p>
+            <p>Opisz krótko, czego potrzebujesz. Formularz jest przygotowany i walidowany w przeglądarce. Bezpieczną wysyłkę wiadomości podłączymy po wyborze hostingu.</p>
             <div class="contact-list">
               <span><i aria-hidden="true">✓</i> Bezpłatna rozmowa wstępna</span>
               <span><i aria-hidden="true">✓</i> Jasny zakres i kolejność prac</span>

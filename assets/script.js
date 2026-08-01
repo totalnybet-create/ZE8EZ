@@ -102,6 +102,7 @@
   }
 
   const heroVisual = document.querySelector('.hero-visual');
+  heroVisual?.setAttribute('role', 'img');
   const resetHeroPointer = () => {
     heroVisual?.style.setProperty('--pointer-x', '0px');
     heroVisual?.style.setProperty('--pointer-y', '0px');
@@ -135,6 +136,7 @@
     slides.forEach((slide, slideIndex) => {
       const isCurrent = slideIndex === currentSlide;
       slide.setAttribute('aria-hidden', String(!isCurrent));
+      slide.toggleAttribute('inert', !isCurrent);
       slide.tabIndex = isCurrent ? 0 : -1;
     });
     dots.forEach((dot, dotIndex) => {

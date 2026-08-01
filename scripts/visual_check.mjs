@@ -77,6 +77,14 @@ for (const viewport of viewports) {
       }
     }
 
+    const businessDetails = await page.locator('[data-business-detail]').allTextContents();
+    if (!businessDetails.some((value) => value.includes('Cała Polska') && value.includes('zdalnie'))) {
+      failures.push(`${viewport.name}: brak potwierdzonego obszaru działania`);
+    }
+    if (!businessDetails.some((value) => value.includes('e-mail'))) {
+      failures.push(`${viewport.name}: brak potwierdzonej metody kontaktu`);
+    }
+
     await page.screenshot({
       path: `${outputDir}/${viewport.name}.png`,
       fullPage: true,
@@ -98,8 +106,11 @@ for (const viewport of viewports) {
         await form.locator('button[type="submit"]').click();
 
         const formStatus = await page.locator('.form-status').textContent();
-        if (!formStatus?.includes('oczekuje na zatwierdzony adres odbiorczy')) {
+        if (!formStatus?.includes('Obecnie skontaktuj się przez e-mail')) {
           failures.push(`mobile-390: nieprawidłowy komunikat trybu bez endpointu: ${formStatus || 'brak'}`);
+        }
+        if (!formStatus?.includes('totalnybet@gmail.com')) {
+          failures.push('mobile-390: komunikat formularza nie zawiera publicznego e-maila');
         }
         if (postRequests.length) failures.push(`mobile-390: formularz wykonał nieoczekiwane POST: ${postRequests.join(', ')}`);
       }
@@ -137,4 +148,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`OK: zapisano ${viewports.length} zrzutów strony, zrzut polityki prywatności i zweryfikowano formularz bez endpointu.`);
+console.log(`OK: zapisano ${viewports.length} zrzutów strony, zrzut polityki prywatności i zweryfikowano potwierdzone dane kontaktowe.`);

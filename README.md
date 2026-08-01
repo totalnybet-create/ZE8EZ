@@ -127,7 +127,7 @@ Skrypt ustawia spójne `canonical`, `og:url`, `robots.txt` i `sitemap.xml`.
 
 - [x] Design system i pełny układ responsywny
 - [x] Hero i autorska grafika produktu
-- [x] Usługi, portfolio demonstracyjne i proces współpracy
+- [x] Usługi, dwie potwierdzone realizacje, jedna koncepcja i proces współpracy
 - [x] O nas, standard współpracy i FAQ
 - [x] Bezpieczna architektura formularza oczekująca na endpoint
 - [x] Robocza polityka prywatności i checklisty prawne

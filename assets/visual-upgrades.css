@@ -159,7 +159,7 @@ body {
   background-image: linear-gradient(90deg, rgba(4,7,14,.75) 0%, rgba(4,7,14,.25) 48%, rgba(4,7,14,.02) 100%), url("project-local.svg");
 }
 .project-card:nth-child(2) {
-  background-image: linear-gradient(90deg, rgba(4,7,14,.75) 0%, rgba(4,7,14,.24) 48%, rgba(4,7,14,.02) 100%), url("project-service.svg");
+  background-image: linear-gradient(90deg, rgba(4,7,14,.75) 0%, rgba(4,7,14,.24) 48%, rgba(4,7,14,.02) 100%), url("project-antiques.svg");
 }
 .project-card:nth-child(3) {
   background-image: linear-gradient(90deg, rgba(4,7,14,.76) 0%, rgba(4,7,14,.25) 48%, rgba(4,7,14,.02) 100%), url("project-store.svg");
@@ -281,4 +281,42 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .hero-visual { background-position: center !important; transition: none; }
   .btn-primary::before { display: none; }
+}
+
+
+/* Portfolio realizacji — linki i status projektu. */
+.project-card-real {
+  border-color: rgba(118, 87, 255, .28);
+}
+.project-card-real .project-copy > small {
+  color: #bcaeff;
+}
+.project-card-concept .project-copy > small {
+  color: #d0a9ff;
+}
+.project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+.project-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 11px;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 8px;
+  background: rgba(108,76,255,.16);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .02em;
+}
+.project-links .project-link-secondary {
+  color: #c4cad6;
+  background: rgba(255,255,255,.035);
+}
+@media (max-width: 430px) {
+  .project-copy { padding: 16px; }
+  .project-links a { min-height: 32px; }
 }

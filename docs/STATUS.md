@@ -24,7 +24,7 @@ Projekt nadal nie jest wersją produkcyjną: brakuje zatwierdzonych danych firmy
 - korekta mobilna po teście na rzeczywistym telefonie,
 - pięć obszarów usług,
 - animowane wskaźniki standardów realizacji,
-- dostępna karuzela trzech koncepcji demonstracyjnych,
+- dostępna karuzela dwóch potwierdzonych realizacji i jednej koncepcji demonstracyjnej,
 - czterostopniowy proces współpracy,
 - sekcja O nas, standard współpracy i FAQ,
 - sekcja kontaktowa i stopka,
@@ -104,7 +104,7 @@ Projekt nadal nie jest wersją produkcyjną: brakuje zatwierdzonych danych firmy
 1. Sprawdzić wyniki najnowszych workflow po korekcie mobilnej.
 2. Pobrać artefakty z testów wizualnych i Lighthouse.
 3. Poprawić problemy wykryte przez rzeczywiste przebiegi.
-4. Uzupełnić dane firmy i prawdziwe portfolio.
+4. Uzupełnić pozostałe dane firmy i dodać trzecią zatwierdzoną realizację.
 5. Podłączyć i przetestować backend formularza.
 6. Sfinalizować dokumenty prawne.
 7. Uruchomić `scripts/configure_release.py` z zatwierdzonym adresem HTTPS.

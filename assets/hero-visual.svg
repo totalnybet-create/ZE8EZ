@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 760" fill="none">
+  <defs>
+    <linearGradient id="orbit" x1="90" y1="620" x2="920" y2="120" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#BD43FF" stop-opacity="0"/>
+      <stop offset=".34" stop-color="#8A50FF"/>
+      <stop offset=".72" stop-color="#327DFF"/>
+      <stop offset="1" stop-color="#327DFF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="metal" x1="234" y1="155" x2="650" y2="644" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7E889F"/>
+      <stop offset=".13" stop-color="#273045"/>
+      <stop offset=".62" stop-color="#111827"/>
+      <stop offset="1" stop-color="#05070C"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="278" y1="201" x2="705" y2="535" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#10192A"/>
+      <stop offset=".58" stop-color="#080D17"/>
+      <stop offset="1" stop-color="#0A1020"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#2D83FF"/>
+      <stop offset=".52" stop-color="#6C4CFF"/>
+      <stop offset="1" stop-color="#BE43FF"/>
+    </linearGradient>
+    <linearGradient id="phone" x1="728" y1="198" x2="915" y2="648" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3D4760"/>
+      <stop offset=".09" stop-color="#111827"/>
+      <stop offset="1" stop-color="#03050A"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientTransform="translate(658 363) rotate(90) scale(333 434)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#5146FF" stop-opacity=".28"/>
+      <stop offset="1" stop-color="#5146FF" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shadow" x="-40%" y="-40%" width="180%" height="200%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="30" stdDeviation="28" flood-color="#000" flood-opacity=".62"/>
+    </filter>
+    <filter id="softGlow" x="-80%" y="-80%" width="260%" height="260%" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <clipPath id="screenClip"><rect x="261" y="187" width="455" height="342" rx="17"/></clipPath>
+    <clipPath id="phoneClip"><rect x="738" y="193" width="166" height="421" rx="32"/></clipPath>
+  </defs>
+
+  <ellipse cx="595" cy="382" rx="415" ry="275" fill="url(#glow)"/>
+  <path d="M78 569C218 716 518 671 734 507C920 365 976 187 859 115" stroke="url(#orbit)" stroke-width="5" stroke-linecap="round" filter="url(#softGlow)"/>
+  <path d="M157 625C337 706 606 601 792 401C932 250 938 150 866 88" stroke="url(#orbit)" stroke-opacity=".46" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="818" cy="157" r="5" fill="#8C58FF" filter="url(#softGlow)"/>
+  <circle cx="186" cy="596" r="4" fill="#C34CFF" filter="url(#softGlow)"/>
+
+  <g filter="url(#shadow)" transform="rotate(-5 493 416)">
+    <rect x="226" y="155" width="530" height="403" rx="26" fill="url(#metal)" stroke="#AEB6C8" stroke-opacity=".38"/>
+    <rect x="249" y="177" width="484" height="363" rx="19" fill="#03060B"/>
+    <g clip-path="url(#screenClip)">
+      <rect x="261" y="187" width="455" height="342" rx="17" fill="url(#screen)"/>
+      <circle cx="655" cy="260" r="136" fill="#623DFF" fill-opacity=".12"/>
+      <rect x="261" y="187" width="455" height="43" fill="#0C1320"/>
+      <circle cx="281" cy="208" r="4" fill="#7C58FF"/>
+      <text x="292" y="212" fill="#F7F8FC" font-family="Arial, sans-serif" font-size="10" font-weight="700">ZE8ES</text>
+      <text x="470" y="212" fill="#7E8799" font-family="Arial, sans-serif" font-size="7">PANEL</text>
+      <text x="514" y="212" fill="#7E8799" font-family="Arial, sans-serif" font-size="7">KLIENCI</text>
+      <text x="565" y="212" fill="#7E8799" font-family="Arial, sans-serif" font-size="7">RAPORTY</text>
+      <rect x="651" y="198" width="43" height="20" rx="6" fill="url(#accent)"/>
+      <text x="663" y="211" fill="white" font-family="Arial, sans-serif" font-size="7" font-weight="700">START</text>
+
+      <text x="291" y="278" fill="#F7F8FC" font-family="Arial, sans-serif" font-size="25" font-weight="700">Zarządzaj swoim</text>
+      <text x="291" y="309" fill="#F7F8FC" font-family="Arial, sans-serif" font-size="25" font-weight="700">biznesem</text>
+      <text x="291" y="340" fill="#7564FF" font-family="Arial, sans-serif" font-size="25" font-weight="700">w jednym miejscu</text>
+      <rect x="291" y="364" width="79" height="27" rx="7" fill="url(#accent)"/>
+      <text x="307" y="381" fill="white" font-family="Arial, sans-serif" font-size="8" font-weight="700">ZACZNIJ</text>
+
+      <rect x="424" y="258" width="122" height="109" rx="12" fill="#111927" stroke="#FFFFFF" stroke-opacity=".08"/>
+      <text x="440" y="280" fill="#8E98AA" font-family="Arial, sans-serif" font-size="8">NOWI KLIENCI</text>
+      <text x="440" y="310" fill="#F7F8FC" font-family="Arial, sans-serif" font-size="24" font-weight="700">+28%</text>
+      <path d="M441 341C459 326 471 344 489 326C506 309 518 326 532 302" stroke="url(#accent)" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="532" cy="302" r="4" fill="#B94CFF"/>
+
+      <rect x="558" y="258" width="129" height="109" rx="12" fill="#111927" stroke="#FFFFFF" stroke-opacity=".08"/>
+      <text x="574" y="280" fill="#8E98AA" font-family="Arial, sans-serif" font-size="8">SKUTECZNOŚĆ</text>
+      <text x="574" y="310" fill="#F7F8FC" font-family="Arial, sans-serif" font-size="24" font-weight="700">94%</text>
+      <circle cx="636" cy="329" r="19" stroke="#253049" stroke-width="6"/>
+      <path d="M636 310A19 19 0 1 1 620 339" stroke="url(#accent)" stroke-width="6" stroke-linecap="round"/>
+
+      <rect x="424" y="379" width="263" height="118" rx="12" fill="#111927" stroke="#FFFFFF" stroke-opacity=".08"/>
+      <text x="440" y="402" fill="#8E98AA" font-family="Arial, sans-serif" font-size="8">WZROST WYNIKÓW</text>
+      <line x1="440" y1="473" x2="671" y2="473" stroke="#FFFFFF" stroke-opacity=".06"/>
+      <line x1="440" y1="438" x2="671" y2="438" stroke="#FFFFFF" stroke-opacity=".06"/>
+      <path d="M441 465C466 450 476 458 497 442C517 426 538 451 560 424C580 400 603 434 624 410C644 387 658 403 672 390" stroke="url(#accent)" stroke-width="3" stroke-linecap="round"/>
+      <path d="M441 465C466 450 476 458 497 442C517 426 538 451 560 424C580 400 603 434 624 410C644 387 658 403 672 390V473H441Z" fill="url(#accent)" fill-opacity=".08"/>
+    </g>
+    <path d="M194 558H787L754 591C744 601 731 606 717 606H263C246 606 230 600 219 589L194 558Z" fill="url(#metal)" stroke="#8A94A7" stroke-opacity=".32"/>
+    <path d="M431 558H548L533 568H446L431 558Z" fill="#131A27"/>
+  </g>
+
+  <g filter="url(#shadow)" transform="rotate(5 821 404)">
+    <rect x="726" y="177" width="191" height="453" rx="40" fill="url(#phone)" stroke="#AAB2C5" stroke-opacity=".48" stroke-width="2"/>
+    <g clip-path="url(#phoneClip)">
+      <rect x="738" y="193" width="166" height="421" rx="32" fill="#080C14"/>
+      <circle cx="864" cy="243" r="93" fill="#6541FF" fill-opacity=".11"/>
+      <rect x="786" y="202" width="70" height="20" rx="11" fill="#020306"/>
+      <circle cx="843" cy="212" r="4" fill="#1C2432"/>
+      <text x="756" y="249" fill="#8F98A9" font-family="Arial, sans-serif" font-size="8">WITAJ</text>
+      <text x="756" y="267" fill="#F7F8FC" font-family="Arial, sans-serif" font-size="14" font-weight="700">Michale</text>
+      <rect x="752" y="287" width="138" height="151" rx="18" fill="url(#accent)"/>
+      <circle cx="865" cy="311" r="4" fill="white" fill-opacity=".75"/>
+      <circle cx="877" cy="311" r="4" fill="white" fill-opacity=".22"/>
+      <text x="769" y="319" fill="white" fill-opacity=".72" font-family="Arial, sans-serif" font-size="8">WYNIK KAMPANII</text>
+      <text x="769" y="348" fill="white" font-family="Arial, sans-serif" font-size="21" font-weight="700">12 540 zł</text>
+      <text x="769" y="364" fill="white" fill-opacity=".7" font-family="Arial, sans-serif" font-size="7">+12,8% w tym miesiącu</text>
+      <path d="M770 412C784 394 795 407 807 389C817 373 831 401 842 382C853 363 866 387 878 365" stroke="#E2A1FF" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="878" cy="365" r="4" fill="#F4C5FF"/>
+
+      <rect x="752" y="454" width="138" height="45" rx="13" fill="#111825" stroke="#FFFFFF" stroke-opacity=".08"/>
+      <rect x="764" y="466" width="22" height="22" rx="7" fill="#35D18D"/>
+      <path d="M770 477L774 481L781 472" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="796" y="474" fill="#F7F8FC" font-family="Arial, sans-serif" font-size="8" font-weight="700">AUTOMATYZACJE</text>
+      <text x="796" y="488" fill="#788397" font-family="Arial, sans-serif" font-size="7">12 aktywnych</text>
+      <path d="M874 474L879 477L874 480" stroke="#7B8597" stroke-width="1.5"/>
+
+      <rect x="752" y="509" width="138" height="45" rx="13" fill="#111825" stroke="#FFFFFF" stroke-opacity=".08"/>
+      <rect x="764" y="521" width="22" height="22" rx="7" fill="#6C4CFF"/>
+      <path d="M770 536V528M775 536V525M780 536V530" stroke="white" stroke-width="2" stroke-linecap="round"/>
+      <text x="796" y="529" fill="#F7F8FC" font-family="Arial, sans-serif" font-size="8" font-weight="700">ANALITYKA</text>
+      <text x="796" y="543" fill="#788397" font-family="Arial, sans-serif" font-size="7">Dane na żywo</text>
+      <path d="M874 529L879 532L874 535" stroke="#7B8597" stroke-width="1.5"/>
+
+      <rect x="752" y="573" width="138" height="27" rx="13" fill="#0C121D"/>
+      <circle cx="776" cy="587" r="4" fill="#7D8798"/>
+      <circle cx="821" cy="587" r="4" fill="#7D8798"/>
+      <circle cx="866" cy="587" r="4" fill="#7D8798"/>
+    </g>
+  </g>
+
+  <g filter="url(#shadow)" transform="rotate(-9 176 406)">
+    <rect x="112" y="326" width="128" height="156" rx="20" fill="#131B2B" stroke="#FFFFFF" stroke-opacity=".14"/>
+    <circle cx="145" cy="362" r="12" fill="#6C4CFF" fill-opacity=".2"/>
+    <path d="M139 361H151M145 355V367" stroke="#8A6BFF" stroke-width="2" stroke-linecap="round"/>
+    <rect x="136" y="390" width="81" height="7" rx="3.5" fill="#FFFFFF" fill-opacity=".13"/>
+    <rect x="136" y="410" width="63" height="7" rx="3.5" fill="#FFFFFF" fill-opacity=".08"/>
+    <rect x="136" y="438" width="43" height="20" rx="6" fill="#6C4CFF" fill-opacity=".28"/>
+  </g>
+
+  <g filter="url(#shadow)" transform="rotate(-8 890 101)">
+    <rect x="849" y="54" width="83" height="94" rx="17" fill="#1A2438" stroke="#FFFFFF" stroke-opacity=".22"/>
+    <path d="M878 87L868 101L878 115M903 87L913 101L903 115M895 79L886 122" stroke="#F7F8FC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

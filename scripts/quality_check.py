@@ -188,7 +188,7 @@ def main() -> None:
         ROOT / "assets/logo-mark.svg",
         ROOT / "assets/hero-visual.svg",
         ROOT / "assets/project-local.svg",
-        ROOT / "assets/project-service.svg",
+        ROOT / "assets/project-antiques.svg",
         ROOT / "assets/project-store.svg",
         ROOT / "docs/IMPLEMENTATION_PLAN.md",
         ROOT / "docs/STATUS.md",
@@ -233,6 +233,8 @@ def main() -> None:
     expected_contact = {
         "brandName": "ZE8ES",
         "brandType": "marka",
+        "operatorName": "Marcin Siedlarek",
+        "operatorType": "osoba prywatna",
         "publicEmail": "totalnybet@gmail.com",
         "serviceArea": "Cała Polska",
         "workModel": "zdalnie",
@@ -247,8 +249,16 @@ def main() -> None:
     privacy = (ROOT / "privacy.html").read_text(encoding="utf-8")
     if 'content="noindex,nofollow"' not in privacy:
         fail("Robocza polityka prywatności musi pozostać poza indeksem")
-    if "Dokument roboczy" not in privacy or "[pełna nazwa firmy" not in privacy:
-        fail("Polityka prywatności nie sygnalizuje roboczego statusu lub brakujących danych")
+    required_privacy_fragments = (
+        "Dokument roboczy",
+        "Marcin Siedlarek",
+        "osoba prywatna",
+        "[adres lub miejscowość do uzupełnienia]",
+        "totalnybet@gmail.com",
+    )
+    missing_privacy = [fragment for fragment in required_privacy_fragments if fragment not in privacy]
+    if missing_privacy:
+        fail(f"Polityka prywatności nie zawiera wymaganych danych lub oznaczeń: {', '.join(missing_privacy)}")
 
     css = (ROOT / "assets/styles.css").read_text(encoding="utf-8")
     visual_css = (ROOT / "assets/visual-upgrades.css").read_text(encoding="utf-8")
@@ -284,7 +294,7 @@ def main() -> None:
     if "@lhci/cli" not in lighthouse_workflow or "upload-artifact" not in lighthouse_workflow:
         fail("Workflow Lighthouse jest niekompletny")
 
-    print("OK: HTML, SEO, grafiki, responsywność, kontakt e-mail, prywatność i infrastruktura testów przeszły kontrolę.")
+    print("OK: HTML, SEO, grafiki, responsywność, kontakt e-mail, operator, prywatność i infrastruktura testów przeszły kontrolę.")
 
 
 if __name__ == "__main__":

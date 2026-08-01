@@ -1,4 +1,10 @@
 {
+  "brandName": "ZE8ES",
+  "brandType": "marka",
+  "publicEmail": "totalnybet@gmail.com",
+  "serviceArea": "Cała Polska",
+  "workModel": "zdalnie",
+  "contactMethod": "e-mail",
   "formEndpoint": "",
   "requestTimeoutMs": 12000,
   "minimumFillTimeMs": 1500,

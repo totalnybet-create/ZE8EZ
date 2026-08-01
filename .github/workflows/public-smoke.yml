@@ -1,0 +1,57 @@
+name: Public Pages smoke check
+
+on:
+  workflow_run:
+    workflows: ["Deploy ZE8ES to GitHub Pages"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: public-pages-smoke
+  cancel-in-progress: true
+
+jobs:
+  public-smoke:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Wait for Pages cache propagation
+        run: sleep 12
+
+      - name: Check deployed site
+        env:
+          ZE8ES_PUBLIC_URL: https://totalnybet-create.github.io/ZE8EZ/
+        run: python scripts/public_smoke_check.py
+
+      - name: Add check summary
+        if: always()
+        run: |
+          if [ -f public-smoke-summary.md ]; then
+            cat public-smoke-summary.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Publiczny test nie utworzył podsumowania." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload public smoke report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ze8es-public-smoke-report
+          path: |
+            public-smoke-report.json
+            public-smoke-summary.md
+          if-no-files-found: warn
+          retention-days: 14

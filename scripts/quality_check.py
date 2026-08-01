@@ -126,6 +126,8 @@ def main() -> None:
         fail(f"Strona powinna zawierać dokładnie jeden element main, znaleziono: {parser.tags['main']}")
     if not parser.stylesheets:
         fail("Brak zewnętrznego arkusza stylów")
+    if "assets/visual-upgrades.css" not in parser.stylesheets:
+        fail("Warstwa dopracowania wizualnego nie jest ładowana bezpośrednio w HTML")
     if not any(item.endswith(".js") for item in parser.sources):
         fail("Brak zewnętrznego pliku JavaScript")
     if parser.inline_style_blocks:
@@ -207,8 +209,6 @@ def main() -> None:
         fail("Brak obsługi ograniczenia animacji")
     if "IntersectionObserver" not in javascript:
         fail("Brak obserwatora sekcji i elementów interfejsu")
-    if "visual-upgrades.css" not in javascript:
-        fail("Dodatkowa warstwa stylów nie jest ładowana przez skrypt")
     if "pointerdown" not in javascript or "ArrowRight" not in javascript:
         fail("Karuzela nie ma pełnej obsługi dotyku i klawiatury")
 

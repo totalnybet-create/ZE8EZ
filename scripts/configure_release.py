@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Konfiguruje potwierdzony publiczny adres ZE8ES w plikach SEO."""
+"""Konfiguruje potwierdzony publiczny adres ZE8ES w plikach SEO i stronie 404."""
 
 from __future__ import annotations
 
@@ -10,6 +10,7 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "index.html"
+ERROR_PAGE = ROOT / "404.html"
 ROBOTS = ROOT / "robots.txt"
 SITEMAP = ROOT / "sitemap.xml"
 
@@ -22,6 +23,11 @@ def normalize_base_url(value: str) -> str:
         raise ValueError("Adres bazowy nie może zawierać parametrów ani fragmentu.")
     path = parsed.path.rstrip("/")
     return f"https://{parsed.netloc}{path}/"
+
+
+def release_root_path(base_url: str) -> str:
+    path = urlparse(base_url).path
+    return path if path.endswith("/") else f"{path}/"
 
 
 def remove_existing_seo_urls(source: str) -> str:
@@ -46,6 +52,22 @@ def build_index(source: str, base_url: str) -> str:
         raise ValueError("Nie znaleziono miejsca na metadane SEO w index.html.")
     line_end = source.find("\n", position)
     return source[: line_end + 1] + tags + source[line_end + 1 :]
+
+
+def build_error_page(source: str, base_url: str) -> str:
+    root_path = release_root_path(base_url)
+    replacements = {
+        r'(<link\s+rel="icon"\s+href=")[^"]+("\s+type="image/svg\+xml">)': rf'\1{root_path}assets/logo-mark.svg\2',
+        r'(<link\s+rel="stylesheet"\s+href=")[^"]+(">)': rf'\1{root_path}assets/error-page.css\2',
+        r'(<a\s+class="brand"\s+href=")[^"]+("\s+aria-label=)': rf'\1{root_path}\2',
+        r'(<img\s+src=")[^"]+("\s+alt=""\s+width="34")': rf'\1{root_path}assets/logo-mark.svg\2',
+        r'(<a\s+class="button"\s+href=")[^"]+(">)': rf'\1{root_path}\2',
+    }
+    for pattern, replacement in replacements.items():
+        source, count = re.subn(pattern, replacement, source)
+        if count != 1:
+            raise ValueError(f"Nie udało się jednoznacznie zaktualizować ścieżki 404: {pattern}")
+    return source
 
 
 def build_robots(base_url: str) -> str:
@@ -77,6 +99,7 @@ def main() -> None:
 
     base_url = normalize_base_url(args.base_url)
     index_content = build_index(INDEX.read_text(encoding="utf-8"), base_url)
+    error_page_content = build_error_page(ERROR_PAGE.read_text(encoding="utf-8"), base_url)
     robots_content = build_robots(base_url)
     sitemap_content = build_sitemap(base_url)
 
@@ -85,6 +108,7 @@ def main() -> None:
         return
 
     INDEX.write_text(index_content, encoding="utf-8")
+    ERROR_PAGE.write_text(error_page_content, encoding="utf-8")
     ROBOTS.write_text(robots_content, encoding="utf-8")
     SITEMAP.write_text(sitemap_content, encoding="utf-8")
     print(f"OK: skonfigurowano publiczny adres {base_url}")

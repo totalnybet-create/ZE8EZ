@@ -1,0 +1,6 @@
+{
+  "formEndpoint": "",
+  "requestTimeoutMs": 12000,
+  "minimumFillTimeMs": 1500,
+  "clientCooldownMs": 60000
+}

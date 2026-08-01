@@ -126,8 +126,9 @@ def main() -> None:
         fail(f"Strona powinna zawierać dokładnie jeden element main, znaleziono: {parser.tags['main']}")
     if not parser.stylesheets:
         fail("Brak zewnętrznego arkusza stylów")
-    if "assets/visual-upgrades.css" not in parser.stylesheets:
-        fail("Warstwa dopracowania wizualnego nie jest ładowana bezpośrednio w HTML")
+    for stylesheet in ("assets/visual-upgrades.css", "assets/responsive-fixes.css"):
+        if stylesheet not in parser.stylesheets:
+            fail(f"Arkusz {stylesheet} nie jest ładowany bezpośrednio w HTML")
     if not any(item.endswith(".js") for item in parser.sources):
         fail("Brak zewnętrznego pliku JavaScript")
     if parser.inline_style_blocks:
@@ -170,6 +171,7 @@ def main() -> None:
         ROOT / ".nojekyll",
         ROOT / "assets/styles.css",
         ROOT / "assets/visual-upgrades.css",
+        ROOT / "assets/responsive-fixes.css",
         ROOT / "assets/script.js",
         ROOT / "assets/logo-mark.svg",
         ROOT / "assets/hero-visual.svg",
@@ -189,7 +191,11 @@ def main() -> None:
     if missing:
         fail(f"Brak wymaganych plików: {', '.join(missing)}")
 
-    css_files = [ROOT / "assets/styles.css", ROOT / "assets/visual-upgrades.css"]
+    css_files = [
+        ROOT / "assets/styles.css",
+        ROOT / "assets/visual-upgrades.css",
+        ROOT / "assets/responsive-fixes.css",
+    ]
     missing_css_references = []
     for css_file in css_files:
         missing_css_references.extend(
@@ -209,15 +215,19 @@ def main() -> None:
 
     css = (ROOT / "assets/styles.css").read_text(encoding="utf-8")
     visual_css = (ROOT / "assets/visual-upgrades.css").read_text(encoding="utf-8")
+    responsive_css = (ROOT / "assets/responsive-fixes.css").read_text(encoding="utf-8")
     javascript = (ROOT / "assets/script.js").read_text(encoding="utf-8")
     visual_test = (ROOT / "scripts/visual_check.mjs").read_text(encoding="utf-8")
     visual_workflow = (ROOT / ".github/workflows/visual-regression.yml").read_text(encoding="utf-8")
     lighthouse_workflow = (ROOT / ".github/workflows/lighthouse.yml").read_text(encoding="utf-8")
 
-    if "@media (max-width:" not in css or "@media (max-width:" not in visual_css:
+    if "@media (max-width:" not in css or "@media (max-width:" not in visual_css or "@media (max-width:" not in responsive_css:
         fail("Brak reguł responsywnych w arkuszach CSS")
-    if "prefers-reduced-motion" not in css or "prefers-reduced-motion" not in visual_css:
+    if "prefers-reduced-motion" not in css or "prefers-reduced-motion" not in visual_css or "prefers-reduced-motion" not in responsive_css:
         fail("Brak obsługi ograniczenia animacji")
+    for breakpoint in (1280, 1090, 820, 430, 350):
+        if str(breakpoint) not in responsive_css:
+            fail(f"Brak oczekiwanego breakpointu {breakpoint}px w poprawkach responsywnych")
     if "IntersectionObserver" not in javascript:
         fail("Brak obserwatora sekcji i elementów interfejsu")
     if "pointerdown" not in javascript or "ArrowRight" not in javascript:

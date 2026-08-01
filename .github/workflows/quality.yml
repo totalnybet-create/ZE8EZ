@@ -22,4 +22,6 @@ jobs:
           python-version: "3.12"
 
       - name: Run ZE8ES quality checks
-        run: python scripts/quality_check.py
+        run: |
+          python scripts/quality_check.py
+          python scripts/release_check.py

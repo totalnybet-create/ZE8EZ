@@ -1,3 +1,4 @@
-# Indeksowanie ZE8ES pozostaje wyłączone do osobnej zgody właściciela.
 User-agent: *
-Disallow: /
+Allow: /
+
+Sitemap: https://ze8es.run.place/sitemap.xml

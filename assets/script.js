@@ -7,6 +7,7 @@
   const menuButton = document.querySelector('.menu-toggle');
   const mobilePanel = document.querySelector('.mobile-panel');
   const navLinks = [...document.querySelectorAll('[data-nav-link]')];
+  const menuLinks = [...document.querySelectorAll('[data-nav-link], [data-menu-link]')];
 
   const setHeaderState = () => {
     header?.classList.toggle('is-scrolled', window.scrollY > 18);
@@ -29,7 +30,7 @@
     if (nextState) mobilePanel.querySelector('a')?.focus();
   });
 
-  navLinks.forEach((link) => link.addEventListener('click', closeMenu));
+  menuLinks.forEach((link) => link.addEventListener('click', closeMenu));
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') closeMenu();
   });
@@ -53,6 +54,20 @@
     }, { rootMargin: '-35% 0px -55% 0px', threshold: 0 });
     sections.forEach((section) => navigationObserver.observe(section));
   }
+
+  const serviceDetailAnchors = [
+    'strony-internetowe',
+    'sklepy-internetowe',
+    'aplikacje',
+    'systemy-automatyzacje',
+    'ai-dla-biznesu',
+    'seo-widocznosc'
+  ];
+
+  document.querySelectorAll('#uslugi .service-card a').forEach((link, index) => {
+    const anchor = serviceDetailAnchors[index];
+    if (anchor) link.href = `uslugi.html#${anchor}`;
+  });
 
   const revealElements = [...document.querySelectorAll('.reveal')];
   if (motionQuery.matches || !('IntersectionObserver' in window)) {
@@ -226,7 +241,6 @@
   const year = document.querySelector('[data-year]');
   if (year) year.textContent = String(new Date().getFullYear());
 })();
-
 
 const contactForm = document.querySelector('#contact-form');
 contactForm?.addEventListener('submit', (event) => {

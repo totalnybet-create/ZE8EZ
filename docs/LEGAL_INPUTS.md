@@ -1,4 +1,4 @@
-# Dane wymagane do finalizacji dokumentów prawnych ZE8ES
+# Dane prawne i prywatności ZE8ES
 
 ## Administrator
 
@@ -7,14 +7,9 @@
 - operator marki: **Marcin Siedlarek**,
 - forma działania: **osoba prywatna, bez zarejestrowanej działalności**,
 - marka: **ZE8ES**,
+- publiczny adres operatora: **ul. Olkuska 1, 59-220 Legnica, Polska**,
 - adres e-mail do kontaktu i spraw prywatności: **totalnybet@gmail.com**,
 - obszar działania: **cała Polska, zdalnie**.
-
-### Do uzupełnienia
-
-- adres lub miejscowość administratora,
-- okres przechowywania korespondencji,
-- podstawy prawne odpowiednie dla faktycznego sposobu obsługi zapytań.
 
 NIP, REGON i KRS nie mają obecnie zastosowania, ponieważ ZE8ES nie jest prowadzony jako zarejestrowana działalność.
 
@@ -22,22 +17,30 @@ NIP, REGON i KRS nie mają obecnie zastosowania, ponieważ ZE8ES nie jest prowad
 
 - zatwierdzony adres odbiorczy: **totalnybet@gmail.com**,
 - strona nie posiada formularza kontaktowego ani własnego backendu,
-- wiadomości są wysyłane przez program pocztowy użytkownika,
-- do ustalenia pozostaje okres przechowywania wiadomości i procedura ich usuwania.
+- wiadomości są wysyłane przez program lub usługę pocztową użytkownika,
+- niezrealizowane zapytania są przechowywane przez **6 miesięcy od ostatniego kontaktu**, a następnie usuwane,
+- korespondencja związana ze współpracą jest przechowywana przez czas jej realizacji,
+- po zakończeniu współpracy pozostają wyłącznie dane niezbędne do rozliczeń oraz ustalenia, dochodzenia lub obrony roszczeń — do upływu właściwego terminu przedawnienia.
+
+## Podstawy prawne
+
+- **art. 6 ust. 1 lit. b RODO** — wycena, oferta, rozpoczęcie współpracy i działania podejmowane przed zawarciem umowy,
+- **art. 6 ust. 1 lit. f RODO** — pozostałe zapytania, udzielanie odpowiedzi, organizacja korespondencji oraz ustalenie, dochodzenie lub obrona roszczeń.
 
 ## Hosting i domena
 
-- obecny adres demonstracyjny: GitHub Pages,
-- obecny hosting: GitHub Pages,
-- docelowa domena: do ustalenia,
-- dostawca DNS: do ustalenia po wyborze domeny,
-- dane przechowywane w logach hostingu i okres ich przechowywania: do potwierdzenia.
+- domena produkcyjna: **https://ze8es.run.place/**,
+- hosting: **GitHub Pages**,
+- dostawca poczty: **Gmail / Google**,
+- dostawca DNS: **DNSExit**,
+- `canonical` i `og:url` wskazują domenę produkcyjną,
+- indeksowanie pozostaje wyłączone do osobnej decyzji właściciela.
 
 ## Analityka i marketing
 
-- obecnie brak wdrożonej analityki i narzędzi marketingowych,
-- decyzja o przyszłej analityce: do podjęcia,
-- mechanizm zgody będzie potrzebny przed uruchomieniem opcjonalnych cookies lub narzędzi marketingowych.
+- brak wdrożonej analityki, reklam, remarketingu i marketingowych cookies,
+- brak banera zgód, ponieważ strona nie uruchamia narzędzi wymagających takiej zgody,
+- dokumenty i mechanizm zgód muszą zostać zaktualizowane przed ewentualnym uruchomieniem takich narzędzi.
 
 ## Treści i portfolio
 
@@ -46,13 +49,13 @@ NIP, REGON i KRS nie mają obecnie zastosowania, ponieważ ZE8ES nie jest prowad
 - należy zachować potwierdzenie prawa do publikacji nazw, logotypów i materiałów projektowych,
 - nie publikować niepotwierdzonych wyników ani opinii klientów.
 
-## Dokumenty do przygotowania przed finalną publikacją
+## Dokumenty
 
-- finalna polityka prywatności,
-- regulamin tylko wtedy, gdy strona zacznie świadczyć usługi drogą elektroniczną wymagające regulaminu,
-- polityka cookies, jeżeli zostaną uruchomione opcjonalne cookies,
-- uzupełnione informacje administratora w dokumencie prywatności.
+- polityka prywatności została uzupełniona o dane administratora, cele, podstawy prawne, okresy przechowywania, odbiorców i prawa osób,
+- polityka prywatności nadal ma `noindex,nofollow` wyłącznie do czasu osobnej decyzji o indeksowaniu,
+- regulamin należy przygotować, jeżeli sposób świadczenia usług będzie wymagał osobnego regulaminu,
+- politykę cookies należy przygotować przed uruchomieniem opcjonalnych cookies.
 
-## Zasada publikacji
+## Stan
 
-Dokument `privacy.html` pozostaje oznaczony jako `noindex,nofollow`, dopóki miejscowość lub adres administratora, okres przechowywania korespondencji i podstawy prawne nie zostaną uzupełnione oraz zatwierdzone.
+Problem brakującego publicznego adresu operatora został rozwiązany 2 sierpnia 2026 r. poprzez publikację adresu za wyraźną zgodą operatora.

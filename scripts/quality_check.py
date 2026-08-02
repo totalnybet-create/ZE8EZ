@@ -235,6 +235,7 @@ def main() -> None:
         "brandType": "marka",
         "operatorName": "Marcin Siedlarek",
         "operatorType": "osoba prywatna",
+        "operatorAddress": "ul. Olkuska 1, 59-220 Legnica, Polska",
         "publicEmail": "totalnybet@gmail.com",
         "serviceArea": "Cała Polska",
         "workModel": "zdalnie",
@@ -248,17 +249,22 @@ def main() -> None:
 
     privacy = (ROOT / "privacy.html").read_text(encoding="utf-8")
     if 'content="noindex,nofollow"' not in privacy:
-        fail("Robocza polityka prywatności musi pozostać poza indeksem")
+        fail("Polityka prywatności musi pozostać poza indeksem do decyzji o indeksowaniu")
     required_privacy_fragments = (
-        "Dokument roboczy",
+        "Prywatność i dane osobowe",
         "Marcin Siedlarek",
         "osoba prywatna",
-        "[adres lub miejscowość do uzupełnienia]",
+        "ul. Olkuska 1, 59-220 Legnica, Polska",
         "totalnybet@gmail.com",
+        "6 miesięcy od ostatniego kontaktu",
+        "art. 6 ust. 1 lit. b RODO",
+        "art. 6 ust. 1 lit. f RODO",
     )
     missing_privacy = [fragment for fragment in required_privacy_fragments if fragment not in privacy]
     if missing_privacy:
-        fail(f"Polityka prywatności nie zawiera wymaganych danych lub oznaczeń: {', '.join(missing_privacy)}")
+        fail(f"Polityka prywatności nie zawiera wymaganych danych: {', '.join(missing_privacy)}")
+    if "[adres lub miejscowość do uzupełnienia]" in privacy or "Dokument roboczy" in privacy:
+        fail("Polityka prywatności nadal zawiera roboczy placeholder lub oznaczenie")
 
     css = (ROOT / "assets/styles.css").read_text(encoding="utf-8")
     visual_css = (ROOT / "assets/visual-upgrades.css").read_text(encoding="utf-8")

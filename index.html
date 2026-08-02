@@ -245,12 +245,17 @@
             </div>
           </div>
 
-          <aside class="contact-direct reveal" aria-label="Bezpośredni kontakt e-mail">
-            <p class="kicker">Kontakt e-mail</p>
-            <a class="contact-email" href="mailto:totalnybet@gmail.com">totalnybet@gmail.com</a>
-            <p>W wiadomości opisz cel projektu, potrzebne funkcje i orientacyjny termin. Odpowiedź otrzymasz drogą e-mailową.</p>
-            <a class="btn btn-primary" href="mailto:totalnybet@gmail.com?subject=Zapytanie%20o%20projekt%20ZE8ES">Napisz e-mail <span aria-hidden="true">→</span></a>
-            <small>ZE8ES nie publikuje obecnie numeru telefonu ani formularza kontaktowego.</small>
+          <aside class="contact-direct reveal" aria-label="Formularz kontaktowy">
+            <p class="kicker">Szybkie zapytanie</p>
+            <form class="contact-form" id="contact-form">
+              <label>Imię lub nazwa firmy<input type="text" name="name" autocomplete="name" required></label>
+              <label>Twój adres e-mail<input type="email" name="email" autocomplete="email" required></label>
+              <label>Interesuje mnie<select name="service" required><option value="">Wybierz usługę</option><option>Strona internetowa</option><option>Sklep internetowy</option><option>Aplikacja</option><option>System lub automatyzacja</option><option>AI dla biznesu</option><option>SEO i marketing</option><option>Inny projekt</option></select></label>
+              <label>Krótko opisz projekt<textarea name="message" rows="5" required placeholder="Cel projektu, potrzebne funkcje i orientacyjny termin"></textarea></label>
+              <button class="btn btn-primary" type="submit">Przygotuj wiadomość <span aria-hidden="true">→</span></button>
+              <p class="form-note" id="form-note">Po kliknięciu otworzy się Twoja aplikacja e-mail z gotową wiadomością do ZE8ES.</p>
+            </form>
+            <a class="contact-email contact-email-small" href="mailto:totalnybet@gmail.com">totalnybet@gmail.com</a>
           </aside>
         </div>
       </div>

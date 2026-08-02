@@ -226,3 +226,24 @@
   const year = document.querySelector('[data-year]');
   if (year) year.textContent = String(new Date().getFullYear());
 })();
+
+
+const contactForm = document.querySelector('#contact-form');
+contactForm?.addEventListener('submit', (event) => {
+  event.preventDefault();
+  if (!contactForm.reportValidity()) return;
+
+  const data = new FormData(contactForm);
+  const name = String(data.get('name') || '').trim();
+  const email = String(data.get('email') || '').trim();
+  const service = String(data.get('service') || '').trim();
+  const message = String(data.get('message') || '').trim();
+  const subject = encodeURIComponent('Zapytanie ZE8ES — ' + service);
+  const body = encodeURIComponent(
+    'Imię / firma: ' + name + '\n' +
+    'E-mail zwrotny: ' + email + '\n' +
+    'Usługa: ' + service + '\n\n' +
+    'Opis projektu:\n' + message
+  );
+  window.location.href = 'mailto:totalnybet@gmail.com?subject=' + subject + '&body=' + body;
+});

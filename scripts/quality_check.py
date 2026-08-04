@@ -285,8 +285,26 @@ def main() -> None:
         fail("Brak obserwatora sekcji i elementów interfejsu")
     if "pointerdown" not in javascript or "ArrowRight" not in javascript:
         fail("Karuzela nie ma pełnej obsługi dotyku i klawiatury")
-    if "#contact-form" in javascript or "formEndpoint" in javascript:
-        fail("JavaScript nadal zawiera nieużywaną obsługę formularza")
+    if "formEndpoint" in javascript:
+        fail("JavaScript nie może zawierać zewnętrznego endpointu formularza")
+    if 'id="contact-form"' in source:
+        required_mailto_form_fragments = (
+            "#contact-form",
+            "contactForm.reportValidity()",
+            "new FormData(contactForm)",
+            "mailto:totalnybet@gmail.com",
+        )
+        missing_form_fragments = [
+            fragment for fragment in required_mailto_form_fragments
+            if fragment not in javascript
+        ]
+        if missing_form_fragments:
+            fail(
+                "Obsługa bezpiecznego formularza mailto jest niekompletna: "
+                + ", ".join(missing_form_fragments)
+            )
+    elif "#contact-form" in javascript:
+        fail("JavaScript zawiera obsługę formularza, którego nie ma w HTML")
     if 'mailto:totalnybet@gmail.com' not in source:
         fail("Strona nie zawiera potwierdzonego kanału e-mail")
 
@@ -300,7 +318,7 @@ def main() -> None:
     if "@lhci/cli" not in lighthouse_workflow or "upload-artifact" not in lighthouse_workflow:
         fail("Workflow Lighthouse jest niekompletny")
 
-    print("OK: HTML, SEO, grafiki, responsywność, kontakt e-mail, operator, prywatność i infrastruktura testów przeszły kontrolę.")
+    print("OK: HTML, SEO, grafiki, responsywność, kontakt e-mail, formularz mailto, operator, prywatność i infrastruktura testów przeszły kontrolę.")
 
 
 if __name__ == "__main__":
